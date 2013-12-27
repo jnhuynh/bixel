@@ -5,6 +5,9 @@ Router.map(function() {
     this.route('new');
     this.route('show', {path: ':player_id'});
   });
+
+  this.resource('levels', function() {
+  });
 });
 
 export default Router;
