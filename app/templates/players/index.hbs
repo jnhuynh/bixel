@@ -1,5 +1,23 @@
 <div class='row'>
   <div class='col-xs-12'>
+    {{! Generated controller detects model is array so it is an ArrayController}}
+    <table class='table table-striped'>
+      <tr>
+        <th>Name</th>
+      </tr>
+
+      {{#each}}
+      {{! Inside the context of each, whose model is the element in array}}
+        <tr>
+          <td>{{name}}</td>
+        </tr>
+      {{/each}}
+    </table>
+  </div>
+</div>
+
+<div class='row'>
+  <div class='col-xs-12'>
     <button class='btn btn-primary' type='submit' {{action newPlayer}}>
       New Player
     </button>
