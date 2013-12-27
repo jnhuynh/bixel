@@ -1,9 +1,23 @@
 <div class='container'>
-  <div class='row'>
-    <div class='col-xs-12'>
-      <h1>Game</h1>
+  <nav class='navbar navbar-default' role='navigation'>
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class='navbar-header'>
+      <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#main-nav'>
+        <span class='sr-only'>Toggle navigation</span>
+        <span class='icon-bar'></span>
+        <span class='icon-bar'></span>
+        <span class='icon-bar'></span>
+      </button>
+      {{#link-to 'index' class='navbar-brand'}}Game{{/link-to}}
     </div>
-  </div>
+
+    <div class='collapse navbar-collapse' id='main-nav'>
+      <ul class='nav navbar-nav'>
+        <li>{{#link-to 'players.index'}}Players{{/link-to}}</li>
+        <li>{{#link-to 'levels.index'}}Levels{{/link-to}}</li>
+      </ul>
+    </div>
+  </nav>
 
   <div class='row'>
     <div class='col-xs-12'>
