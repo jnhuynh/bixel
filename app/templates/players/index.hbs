@@ -6,10 +6,9 @@
         <th>Name</th>
       </tr>
 
-      {{#each}}
-      {{! Inside the context of each, whose model is the element in array}}
+      {{#each player in model}}
         <tr>
-          <td>{{name}}</td>
+          <td>{{#link-to 'players.show' player}}{{player.name}}{{/link-to}}</td>
         </tr>
       {{/each}}
     </table>
