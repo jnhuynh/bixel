@@ -30,7 +30,7 @@ class Api::V1::PlayersController < ApplicationController
 
   private
 
-    def players_params
+    def player_params
       params.require(:player).permit(:name)
     end
 end
