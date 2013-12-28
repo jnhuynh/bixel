@@ -12,7 +12,7 @@ export default Ember.Route.extend({
 
   actions: {
     newPlayer: function() {
-      this.transitionTo('players.new');
+      return this.transitionTo('players.new');
     }
   }
 });
