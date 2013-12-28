@@ -1,5 +1,23 @@
 <div class='row'>
   <div class='col-xs-12'>
-    <p>In Level Index</p>
+    <table class='table table-striped'>
+      <tr>
+        <th>Name</th>
+      </tr>
+
+      {{#each level in model}}
+        <tr>
+          <td>{{#link-to 'levels.show' level}}{{level.name}}{{/link-to}}</td>
+        </tr>
+      {{/each}}
+    </table>
+  </div>
+</div>
+
+<div class='row'>
+  <div class='col-xs-12'>
+    <button class='btn btn-primary' type='submit' {{action newLevel}}>
+      New Level
+    </button>
   </div>
 </div>

@@ -7,6 +7,8 @@ Router.map(function() {
   });
 
   this.resource('levels', function() {
+    this.route('new');
+    this.route('show', {path: ':level_id'});
   });
 });
 
