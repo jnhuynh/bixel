@@ -1,4 +1,12 @@
 export default Ember.Route.extend({
+  beforeModel: function() {
+    if (typeof(this.controllerFor('players.show')) === 'undefined') {
+      this.transitionTo('players.index');
+    }
+
+    return;
+  },
+
   model: function(params) {
     return this.store.find('level', params.level_id);
   },
