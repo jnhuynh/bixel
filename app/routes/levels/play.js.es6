@@ -12,7 +12,7 @@ export default Ember.Route.extend({
   },
 
   setupController: function(controller, model) {
-    var currentPlayer = this.controllerFor('players.show').get('model');
+    var currentPlayer = this.modelFor('players.show');
 
     controller.set('model', model);
     controller.set('currentPlayer', currentPlayer);
