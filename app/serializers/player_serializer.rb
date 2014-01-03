@@ -1,3 +1,6 @@
 class PlayerSerializer < ActiveModel::Serializer
-  attributes(:id, :x, :y, :name, :updated_at, :level)
+  embed(:ids)
+
+  attributes(:id, :x, :y, :name, :updated_at)
+  has_one(:level)
 end
