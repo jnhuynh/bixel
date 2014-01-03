@@ -52,9 +52,7 @@ export default Ember.View.extend({
     player.set('x', coord.x);
     player.set('y', coord.y);
 
-    if (player.get('isDirty')) {
-      player.save();
-    }
+    player.save();
 
     return;
   }
