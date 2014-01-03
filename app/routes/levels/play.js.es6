@@ -28,11 +28,11 @@ export default Ember.Route.extend({
       level.get('players').removeObject(player);
 
       level.save().then(function() {
-          player.set('level', null);
-
-          player.save().then(function() {
-            _this.transitionTo('players.show', player);
-          });
+        player.set('level', null);
+        return player.save();
+      }).then(function() {
+        _this.transitionTo('players.show', player);
+        return;
       });
 
       return;

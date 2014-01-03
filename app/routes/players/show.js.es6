@@ -18,27 +18,12 @@ export default Ember.Route.extend({
       level.get('players').pushObject(currentPlayer);
 
       level.save().then(function() {
+        currentPlayer.set('level', level);
         return currentPlayer.save();
       }).then(function() {
-        /**
-         * Ember data has a that does not set 'isDirty' to true when a OneToMany
-         * relationship is updated.
-         *
-         * We still use 'DS.Model.save' to push to our backend. 'DS.Store.push'
-         * is used to explicitly overwrite of our front end data store because
-         * the 'DS.Model.save' will null out our updated association after the
-         * each 'DS.Model.save'.
-         *
-         * THIS IS AN ABSOLUTE HACK. I hope Ember will fix this in the future.
-         */
-        level.get('players').pushObject(currentPlayer);
-        _this.store.push('level', level.get('payload'));
-        _this.store.push('player', currentPlayer.get('payload'));
-
         _this.transitionTo('levels.play', level);
         return;
       });
-
 
       return;
     },
