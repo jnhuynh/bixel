@@ -7,41 +7,17 @@ export default Ember.Route.extend({
     return;
   },
 
-  pollerDelay:       25,
-  pollerIntervalID:  null,
-  poller: function() {
-    var _this = this;
-
-    var _poller = function() {
-      var url = '/api/v1/levels/' + _this.get('controller.model.id');
-
-      jQuery.ajax(url).then(function(data) {
-        /**
-         * Normalize the JSON's for DS.Store.push and sideload all of the players
-         * associated.
-         */
-        data.level.players = data.level.player_ids;
-        delete data.level.player_ids;
-
-        _this.store.push('level', data.level);
-
-        data.players.forEach(function(player) {
-          player.level = player.level_id;
-          delete player.level_id;
-
-          _this.store.push('player', player);
-        });
-      });
-      return;
-    };
-
-    return _poller;
-  },
+  websocket:     null,
+  levelChannel:  null,
 
   deactivate: function() {
-    var pollerIntervalID = this.get('pollerIntervalID');
+    var level     = this.get('currentModel'),
+        websocket = this.get('websocket');
 
-    window.clearInterval(pollerIntervalID);
+    websocket.unsubscribe('level' + level.get('id'));
+
+    this.set('websocket', null);
+    this.set('levelChannel', null);
 
     return;
   },
@@ -51,16 +27,38 @@ export default Ember.Route.extend({
   },
 
   setupController: function(controller, model) {
-    var currentPlayer    = this.modelFor('players.show'),
-        poller           = this.poller(),
-        pollerDelay      = this.pollerDelay,
-        pollerIntervalID = null;
+    var _this         = this,
+        currentPlayer = this.modelFor('players.show'),
+        websocket     = new WebSocketRails('localhost:3000/websocket'),
+        levelChannel  = websocket.subscribe('level' + model.get('id'));
 
     controller.set('model', model);
     controller.set('currentPlayer', currentPlayer);
+    controller.set('levelChannel', levelChannel);
 
-    pollerIntervalID = window.setInterval(poller, pollerDelay);
-    this.set('pollerIntervalID', pollerIntervalID);
+    this.set('websocket', websocket);
+    this.set('levelChannel', levelChannel);
+    levelChannel.bind('updated', function(jsonString) {
+      /**
+       * Normalize the JSON's for DS.Store.push and sideload all of the players
+       * associated.
+       */
+      var data = JSON.parse(jsonString);
+
+      data.level.players = data.level.player_ids;
+      delete data.level.player_ids;
+
+      _this.store.push('level', data.level);
+
+      data.players.forEach(function(player) {
+        player.level = player.level_id;
+        delete player.level_id;
+
+        _this.store.push('player', player);
+      });
+
+      return;
+    });
 
     return;
   },
