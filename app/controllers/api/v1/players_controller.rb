@@ -16,8 +16,15 @@ class Api::V1::PlayersController < ApplicationController
 
   def update
     player = Player.find(params[:id])
-
     player.update_attributes(player_params)
+
+    level = player.level
+    if (!level.nil?)
+      # Publish our updated info to all clients subscribed our level.
+      channel_name = "level#{level.id}".to_sym
+      json         = level.active_model_serializer.new(level).to_json
+      WebsocketRails[channel_name].trigger(:updated, json)
+    end
 
     render(:json => player)
   end
