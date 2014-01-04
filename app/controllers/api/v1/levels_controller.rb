@@ -18,6 +18,11 @@ class Api::V1::LevelsController < ApplicationController
     level = Level.find(params[:id])
     level.update_attributes(level_params)
 
+    # Publish our updated level info to all clients subscribed.
+    channel_name = "level#{level.id}".to_sym
+    json         = level.active_model_serializer.new(level).to_json
+    WebsocketRails[channel_name].trigger(:updated, json)
+
     render(:json => level)
   end
 
