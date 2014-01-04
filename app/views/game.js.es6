@@ -13,8 +13,6 @@ export default Ember.View.extend({
   canvasHeight:  Ember.computed.alias('level.height'),
   canvasCtx:     null,
 
-  canvasRenderDelay:       34, // Slightly under 30FPS
-  canvasRenderIntervalID:  null,
   canvasRender: function() {
     var _this = this;
 
@@ -30,6 +28,7 @@ export default Ember.View.extend({
       // console.log('(' + player.get('x') + ',' + player.get('y') + ')');
       canvasCtx.clearRect(0, 0, canvasWidth, canvasHeight);
 
+      // console.log(level.get('players.length'));
       level.get('players').forEach(function(player) {
         canvasCtx.fillStyle = '#000000';
         canvasCtx.fillRect(player.get('x'), player.get('y'), tileSize, tileSize);
@@ -42,11 +41,10 @@ export default Ember.View.extend({
   },
 
   didInsertElement: function() {
-    var canvas                 = jQuery('canvas.game'),
-        canvasCtx              = canvas[0].getContext('2d'),
-        canvasRender           = this.canvasRender(),
-        canvasRenderDelay      = this.canvasRenderDelay,
-        canvasRenderIntervalID = null;
+    var canvas            = jQuery('canvas.game'),
+        canvasCtx         = canvas[0].getContext('2d'),
+        canvasRender      = this.canvasRender(),
+        levelChannel      = this.get('levelChannel');
 
     canvas.attr('width', this.get('canvasWidth'));
     canvas.attr('height', this.get('canvasHeight'));
@@ -54,18 +52,7 @@ export default Ember.View.extend({
     this.set('canvas', canvas);
     this.set('canvasCtx', canvasCtx);
 
-    canvasRenderIntervalID = window.setInterval(canvasRender, canvasRenderDelay);
-    this.set('canvasRenderIntervalID', canvasRenderIntervalID);
-
-    return;
-  },
-
-  willDestroyElement: function() {
-    var canvasRenderIntervalID = this.get('canvasRenderIntervalID');
-
-    window.clearInterval(canvasRenderIntervalID);
-
-    return;
+    levelChannel.bind('updated', canvasRender);
   },
 
   calcCoord: function(direction, x, y, tileSize, minX, minY, maxX, maxY) {
