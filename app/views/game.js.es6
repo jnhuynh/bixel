@@ -6,12 +6,40 @@ export default Ember.View.extend({
   level:   null,
   player:  null,
 
+  tileSize: 32,
+
   canvas:        null,
   canvasWidth:   Ember.computed.alias('level.width'),
   canvasHeight:  Ember.computed.alias('level.height'),
   canvasCtx:     null,
 
-  tileSize: 32,
+  canvasRenderDelay:       34, // Slightly under 30FPS
+  canvasRenderIntervalID:  null,
+  canvasRender: function() {
+    var _this = this;
+
+    var _canvasRender = function() {
+      var level        = _this.get('level'),
+          canvas       = _this.get('canvas'),
+          canvasWidth  = _this.get('canvasWidth'),
+          canvasHeight = _this.get('canvasHeight'),
+          canvasCtx    = _this.get('canvasCtx'),
+          tileSize     = _this.get('tileSize');
+
+      // console.log(canvasCtx);
+      // console.log('(' + player.get('x') + ',' + player.get('y') + ')');
+      canvasCtx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+      level.get('players').forEach(function(player) {
+        canvasCtx.fillStyle = '#000000';
+        canvasCtx.fillRect(player.get('x'), player.get('y'), tileSize, tileSize);
+      });
+
+      return;
+    };
+
+    return _canvasRender;
+  },
 
   didInsertElement: function() {
     var canvas                 = jQuery('canvas.game'),
@@ -28,34 +56,16 @@ export default Ember.View.extend({
 
     canvasRenderIntervalID = window.setInterval(canvasRender, canvasRenderDelay);
     this.set('canvasRenderIntervalID', canvasRenderIntervalID);
+
     return;
   },
 
-  canvasRenderDelay:       34, // Slightly under 30FPS
-  canvasRenderIntervalID:  null,
-  canvasRender: function() {
-    var _this = this;
+  willDestroyElement: function() {
+    var canvasRenderIntervalID = this.get('canvasRenderIntervalID');
 
-    var _canvasRender = function() {
-      var player       = _this.get('player'),
-          level        = _this.get('level'),
-          canvas       = _this.get('canvas'),
-          canvasWidth  = _this.get('canvasWidth'),
-          canvasHeight = _this.get('canvasHeight'),
-          canvasCtx    = _this.get('canvasCtx'),
-          tileSize     = _this.get('tileSize');
+    window.clearInterval(canvasRenderIntervalID);
 
-      // console.log(canvasCtx);
-      // console.log('(' + player.get('x') + ',' + player.get('y') + ')');
-      canvasCtx.clearRect(0, 0, canvasWidth, canvasHeight);
-
-      canvasCtx.fillStyle = '#000000';
-      canvasCtx.fillRect(player.get('x'), player.get('y'), tileSize, tileSize);
-
-      return;
-    };
-
-    return _canvasRender;
+    return;
   },
 
   calcCoord: function(direction, x, y, tileSize, minX, minY, maxX, maxY) {
