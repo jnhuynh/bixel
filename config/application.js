@@ -5,6 +5,7 @@
 //= require adapter
 //= require router
 //= require_tree ../app
+//= require_tree ../vendor/assets/javascripts
 //= require_tree ./initializers
 
 window.App = require('app').default.create();
