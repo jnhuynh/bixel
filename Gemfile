@@ -6,6 +6,9 @@ gem 'rails', '4.0.2'
 # Use Ember.js for our front end
 gem 'ember-appkit-rails'
 
+# Use Websockets for live Updates
+gem 'websocket-rails'
+
 # Use postgresql as the database for Active Record
 gem 'pg'
 
