@@ -12,9 +12,17 @@ export default Ember.View.extend({
 
   tileSize: 32,
 
-  calcCoord: function(direction, x, y, tileSize, minX, minY, maxX, maxY) {
-    maxX = maxX - tileSize;
-    maxY = maxY - tileSize;
+  calcCoord: function(direction) {
+    var level      = this.get('level'),
+        tileSize   = this.get('tileSize'),
+        player     = this.get('player'),
+        y          = player.get('y'),
+        x          = player.get('x'),
+        minX       = 0,
+        minY       = 0,
+        maxX       = level.get('width') - tileSize,
+        maxY       = level.get('height') - tileSize,
+        collisions = null;
 
     switch(direction) {
       case 'up':
@@ -31,7 +39,19 @@ export default Ember.View.extend({
         break;
     }
 
-    return { x: x, y: y };
+    collisions = level.get('players').filter(function(p) {
+      if (player.get('id') != p.get('id')) {
+        return p.onPlayer(x, y, tileSize);
+      } else {
+        return false;
+      }
+    });
+
+    if (collisions.get('length') > 0) {
+      return { x: player.get('x'), y: player.get('y') };
+    } else {
+      return { x: x, y: y };
+    }
   },
 
   keyDown: function(event) {
@@ -60,9 +80,7 @@ export default Ember.View.extend({
         break;
     }
 
-    coord = this.calcCoord(direction, player.get('x'), player.get('y'),
-      tileSize, 0, 0, level.get('width'), level.get('height')
-    );
+    coord = this.calcCoord(direction);
 
     player.set('x', coord.x);
     player.set('y', coord.y);
