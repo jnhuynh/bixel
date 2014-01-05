@@ -13,6 +13,9 @@ export default Ember.View.extend({
   tileSize: 32,
 
   calcCoord: function(direction, x, y, tileSize, minX, minY, maxX, maxY) {
+    maxX = maxX - tileSize;
+    maxY = maxY - tileSize;
+
     switch(direction) {
       case 'up':
         y = (y - tileSize) < minY ? minY : (y - tileSize);
@@ -21,10 +24,10 @@ export default Ember.View.extend({
         y = (y + tileSize) > maxY ? maxY : (y + tileSize);
         break;
       case 'left':
-        x = (x - tileSize) < minY ? minY : (x - tileSize);
+        x = (x - tileSize) < minX ? minX : (x - tileSize);
         break;
       case 'right':
-        x = (x + tileSize) > maxY ? maxY : (x + tileSize);
+        x = (x + tileSize) > maxX ? maxX : (x + tileSize);
         break;
     }
 
