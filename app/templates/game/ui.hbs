@@ -1,0 +1,12 @@
+{{#with view}}
+  <div class='panel-heading'>
+    <button type='submit' class='btn btn-default' {{action exitLevel player}}>
+      Exit
+    </button>
+    <p>Level: {{level.name}} (width: {{level.width}}, height: {{level.height}})</p>
+    <p>Player: {{player.name}} (X: {{player.x}}, Y: {{player.y}})</p>
+  </div>
+  <div class='panel-body'>
+    <canvas class='game' tabindex='0'/>
+  </div>
+{{/with}}

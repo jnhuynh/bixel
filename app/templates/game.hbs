@@ -1,10 +1,7 @@
 {{#with view}}
-  <div class='panel-heading'>
-    level: {{level.name}} (width: {{level.width}}, height: {{level.height}})
-  </div>
-
-  <div class='panel-body'>
-    <p>Player: {{player.name}} (X: {{player.x}}, Y: {{player.y}})</p>
-    <canvas class='game' tabindex='0'/>
+  <div class='row'>
+    <div class='col-xs-12'>
+      {{view 'game/ui' levelBinding='level' levelChannelBinding='levelChannel' playerBinding='player'}}
+    </div>
   </div>
 {{/with}}
