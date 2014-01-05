@@ -18,39 +18,43 @@ export default Ember.View.extend({
         player     = this.get('player'),
         y          = player.get('y'),
         x          = player.get('x'),
-        minX       = 0,
-        minY       = 0,
-        maxX       = level.get('width') - tileSize,
-        maxY       = level.get('height') - tileSize,
+        newY       = player.get('y'),
+        newX       = player.get('x'),
         collisions = null;
 
     switch(direction) {
       case 'up':
-        y = level.onLevel(y - tileSize, x, tileSize) ? (y - tileSize): y;
+        newY = y - tileSize;
+        newX = x;
         break;
       case 'down':
-        y = level.onLevel(y + tileSize, x, tileSize) ? (y + tileSize): y;
+        newY = y + tileSize;
+        newX = x;
         break;
       case 'left':
-        x = level.onLevel(y, x - tileSize, tileSize) ? (x - tileSize): x;
+        newY = y;
+        newX = x - tileSize;
         break;
       case 'right':
-        x = level.onLevel(y, x + tileSize, tileSize) ? (x + tileSize): x;
+        newY = y;
+        newX = x + tileSize;
         break;
     }
 
-    collisions = level.get('players').filter(function(p) {
-      if (player.get('id') != p.get('id')) {
-        return p.onPlayer(x, y, tileSize);
-      } else {
-        return false;
-      }
-    });
+    if (level.onLevel(newX, newY, tileSize)) {
+      collisions = level.get('players').filter(function(p) {
+        // Collect all players who occupy the space
+        return (player.get('id') !== p.get('id') &&
+          p.onPlayer(newX, newY, tileSize));
+      });
 
-    if (collisions.get('length') > 0) {
-      return { x: player.get('x'), y: player.get('y') };
+      if (collisions.get('length') === 0) {
+        // We are within bound of level and no player collisoin, we can move
+        return { x: newX, y: newY };
+      }
     } else {
-      return { x: x, y: y };
+      // We are cannot move outside of level boundaries
+      return { x: player.get('x'), y: player.get('y') };
     }
   },
 
