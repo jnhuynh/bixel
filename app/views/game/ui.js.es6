@@ -26,16 +26,16 @@ export default Ember.View.extend({
 
     switch(direction) {
       case 'up':
-        y = (y - tileSize) < minY ? minY : (y - tileSize);
+        y = level.onLevel(y - tileSize, x, tileSize) ? (y - tileSize): y;
         break;
       case 'down':
-        y = (y + tileSize) > maxY ? maxY : (y + tileSize);
+        y = level.onLevel(y + tileSize, x, tileSize) ? (y + tileSize): y;
         break;
       case 'left':
-        x = (x - tileSize) < minX ? minX : (x - tileSize);
+        x = level.onLevel(y, x - tileSize, tileSize) ? (x - tileSize): x;
         break;
       case 'right':
-        x = (x + tileSize) > maxX ? maxX : (x + tileSize);
+        x = level.onLevel(y, x + tileSize, tileSize) ? (x + tileSize): x;
         break;
     }
 
