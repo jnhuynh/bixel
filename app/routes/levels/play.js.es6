@@ -9,36 +9,10 @@ export default Ember.Route.extend({
 
   websocket:     null,
   levelChannel:  null,
+  loadLevelChannelPayload: function() {
+    var _this = this;
 
-  deactivate: function() {
-    var level     = this.get('currentModel'),
-        websocket = this.get('websocket');
-
-    websocket.unsubscribe('level' + level.get('id'));
-
-    this.set('websocket', null);
-    this.set('levelChannel', null);
-
-    return;
-  },
-
-  model: function(params) {
-    return this.store.find('level', params.level_id);
-  },
-
-  setupController: function(controller, model) {
-    var _this         = this,
-        currentPlayer = this.modelFor('players.show'),
-        websocket     = new WebSocketRails('localhost:3000/websocket'),
-        levelChannel  = websocket.subscribe('level' + model.get('id'));
-
-    controller.set('model', model);
-    controller.set('currentPlayer', currentPlayer);
-    controller.set('levelChannel', levelChannel);
-
-    this.set('websocket', websocket);
-    this.set('levelChannel', levelChannel);
-    levelChannel.bind('updated', function(jsonString) {
+    var _loadLevelChannelPayload = function(jsonString) {
       /**
        * Normalize the JSON's for DS.Store.push and sideload all of the players
        * associated.
@@ -58,7 +32,40 @@ export default Ember.Route.extend({
       });
 
       return;
-    });
+    };
+
+    return _loadLevelChannelPayload;
+  },
+
+  deactivate: function() {
+    var level     = this.get('currentModel'),
+        websocket = this.get('websocket');
+
+    websocket.unsubscribe('level' + level.get('id'));
+
+    this.set('websocket', null);
+    this.set('levelChannel', null);
+
+    return;
+  },
+
+  model: function(params) {
+    return this.store.find('level', params.level_id);
+  },
+
+  setupController: function(controller, model) {
+    var currentPlayer           = this.modelFor('players.show'),
+        websocket               = new WebSocketRails('localhost:3000/websocket'),
+        levelChannel            = websocket.subscribe('level' + model.get('id')),
+        loadLevelChannelPayload = this.loadLevelChannelPayload();
+
+    controller.set('model', model);
+    controller.set('currentPlayer', currentPlayer);
+    controller.set('levelChannel', levelChannel);
+
+    this.set('websocket', websocket);
+    this.set('levelChannel', levelChannel);
+    levelChannel.bind('updated', loadLevelChannelPayload);
 
     return;
   },
