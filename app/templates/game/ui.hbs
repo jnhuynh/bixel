@@ -7,6 +7,6 @@
     <p>Player: {{player.name}} (X: {{player.x}}, Y: {{player.y}})</p>
   </div>
   <div class='panel-body'>
-    <canvas class='game' tabindex='0'/>
+    {{view 'game/canvas' levelBinding='level' levelChannelBinding='levelChannel'}}
   </div>
 {{/with}}
