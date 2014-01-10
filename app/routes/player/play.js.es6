@@ -107,5 +107,29 @@ export default Ember.Route.extend({
     controller.set('updateChannel', updateChannel);
 
     return;
+  },
+
+  actions: {
+    exitGame: function() {
+      var level         = this.controller.get('currentLevel'),
+          currentPlayer = this.controller.get('currentPlayer'),
+          dispatcher    = this.get('dispatcher'),
+          data          = null;
+
+      level.get('players').removeObject(currentPlayer);
+
+      data = {
+        level: {
+          id: level.get('id')
+        },
+        player: {
+          id: currentPlayer.get('id')
+        }
+      };
+      dispatcher.trigger('player_exited', data);
+
+      this.transitionTo('players.show', currentPlayer);
+      return;
+    }
   }
 });

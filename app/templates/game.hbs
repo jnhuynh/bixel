@@ -1,3 +1,6 @@
 {{#with view}}
+  <button type='submit' class='btn btn-warning' {{action exitGame}}>
+    Exit Game
+  </button>
   {{view 'game/render' levelBinding='level' updateChannelBinding='updateChannel'}}
 {{/with}}
