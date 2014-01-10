@@ -1,8 +1,9 @@
 export default Ember.View.extend({
   templateName:  'game',
 
+  classNames:         'game-ui'.w(),
   attributeBindings:  'tabindex'.w(),
-  tabindex: 0,
+  tabindex:           0,
 
   dispatcher:     null,
   updateChannel:  null,
