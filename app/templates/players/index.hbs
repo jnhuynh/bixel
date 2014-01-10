@@ -1,0 +1,11 @@
+<table class='table table-striped'>
+  <tr>
+    <th>Name</th>
+  </tr>
+
+  {{#each}}
+    <tr>
+      <td>{{#link-to 'players.show' this}}{{name}}{{/link-to}}</td>
+    </tr>
+  {{/each}}
+</table>
