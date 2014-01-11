@@ -6,14 +6,14 @@ export default Ember.View.extend({
 
   tabindex:  0,
 
-  dispatcher:     null,
-  updateChannel:  null,
-  currentPlayer:  null,
-  level:          null,
+  dispatcher:     Ember.computed.alias('controller.dispatcher'),
+  updateChannel:  Ember.computed.alias('controller.updateChannel'),
+  currentPlayer:  Ember.computed.alias('controller.currentPlayer'),
+  currentLevel:   Ember.computed.alias('controller.currentLevel'),
 
   keyDown: function(event) {
     var dispatcher               = this.get('dispatcher'),
-        level                    = this.get('level'),
+        currentLevel             = this.get('currentLevel'),
         currentPlayer            = this.get('currentPlayer'),
         currentPlayerSpriteSheet = currentPlayer.get('spriteSheet'),
         direction                = null,
@@ -45,7 +45,7 @@ export default Ember.View.extend({
 
       data = {
         level: {
-          id: level.get('id')
+          id: currentLevel.get('id')
         },
         player: {
           id:         currentPlayer.get('id'),
