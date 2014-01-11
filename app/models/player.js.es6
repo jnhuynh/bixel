@@ -4,6 +4,9 @@ export default DS.Model.extend({
   x:          DS.attr('number'),
   y:          DS.attr('number'),
 
+  currentHealth:  DS.attr('number'),
+  maxHealth:      DS.attr('number'),
+
   level:        DS.belongsTo('level'),
   spriteSheet:  DS.belongsTo('spriteSheet'),
 
