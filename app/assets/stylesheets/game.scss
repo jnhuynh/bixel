@@ -1,7 +1,26 @@
-.game-ui {
-  .exit-game {
-    position:  relative;
-    top:       0px;
-    left:      0px;
+.game-container {
+  position: relative;
+
+  .game-ui {
+    position:  absolute;
+    z-index:   2;
+
+    .exit-game {
+      position:  absolute;
+      top:       5px;
+      left:      5px;
+    }
+
+    .player-pos {
+      display:   inline-block;
+      position:  absolute;
+      top:       5px;
+      right:     5px;
+    }
+  }
+
+  .game-render {
+    position:  absolute;
+    z-index:   1;
   }
 }

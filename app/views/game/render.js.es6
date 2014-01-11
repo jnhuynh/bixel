@@ -2,9 +2,6 @@ export default Ember.View.extend({
   templateName:  'game/render',
   classNames:    'game-render'.w(),
 
-  width:   Ember.computed.alias('controller.currentLevel.width'),
-  height:  Ember.computed.alias('controller.currentLevel.height'),
-
   currentLevel:   Ember.computed.alias('controller.currentLevel'),
   updateChannel:  Ember.computed.alias('controller.updateChannel'),
 
@@ -15,8 +12,8 @@ export default Ember.View.extend({
 
     return function() {
       var currentLevel = _this.get('currentLevel'),
-          width        = _this.get('width'),
-          height       = _this.get('height'),
+          width        = _this.get('currentLevel.width'),
+          height       = _this.get('currentLevel.height'),
           renderCtx    = _this.get('renderCtx');
 
       renderCtx.clearRect(0, 0, width, height);
@@ -41,9 +38,8 @@ export default Ember.View.extend({
         renderCanvasCtx = this.get('renderCanvasCtx'),
         updateChannel   = this.get('updateChannel');
 
-    canvas.attr('width', this.get('width'));
-    canvas.attr('height', this.get('height'));
-    canvas.attr('class', 'center-block panel panel-default');
+    canvas.attr('width', this.get('currentLevel.width'));
+    canvas.attr('height', this.get('currentLevel.height'));
 
     this.set('canvas', canvas);
     this.set('renderCtx', renderCtx);
