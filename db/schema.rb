@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140107031033) do
+ActiveRecord::Schema.define(version: 20140111231308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 20140107031033) do
     t.integer  "level_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "current_health", default: 100
+    t.integer  "max_health",     default: 100
   end
 
   create_table "sprite_sheets", force: true do |t|
