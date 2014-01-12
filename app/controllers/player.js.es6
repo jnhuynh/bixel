@@ -1,4 +1,14 @@
+import SpriteSheetController from 'app/controllers/sprite-sheet'
+
 export default Ember.ObjectController.extend({
+  spriteSheet: function() {
+    var playerSpriteSheet = this.get('model.spriteSheet');
+
+    return SpriteSheetController.create({
+      model: playerSpriteSheet
+    });
+  }.property('model'),
+
   tileSize: function() {
     var spriteSheet = this.get('spriteSheet');
 
