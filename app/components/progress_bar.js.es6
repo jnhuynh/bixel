@@ -11,9 +11,9 @@ export default Ember.Component.extend({
   percent: function() {
     var current = this.get('current'),
         max     = this.get('max'),
-        percent = Math.floor(current / max) * 100;
+        percent = (current / max) * 100;
 
-    return percent;
+    return Math.floor(percent);
   }.property('max', 'current'),
 
   widthString: function() {
