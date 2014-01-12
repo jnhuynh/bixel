@@ -33,7 +33,7 @@ export default Ember.View.extend({
         x:               currentPlayer.get('x'),
         y:               currentPlayer.get('y'),
         direction:       currentPlayer.get('direction'),
-        current_health:  currentPlayer.get('currentHealth') - 1
+        current_health:  currentPlayer.get('currentHealth')
       },
       sprite_sheet: {
         id:     currentPlayerSpriteSheet.get('id'),
