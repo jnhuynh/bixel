@@ -76,7 +76,7 @@ export default Ember.Route.extend({
 
     updateChannel.bind('updated', updateFromPayload);
 
-    currentLevel.get('players.content').pushObject(currentPlayer.get('model'));
+    currentLevel.get('players.model').pushObject(currentPlayer.get('model'));
     data = {
       level: {
         id: currentLevel.get('id')
@@ -119,7 +119,7 @@ export default Ember.Route.extend({
           dispatcher    = this.get('dispatcher'),
           data          = null;
 
-      currentLevel.get('players.content').removeObject(currentPlayer.get('model'));
+      currentLevel.get('players.model').removeObject(currentPlayer.get('model'));
 
       data = {
         level: {
@@ -131,7 +131,7 @@ export default Ember.Route.extend({
       };
       dispatcher.trigger('player_exited', data);
 
-      this.transitionTo('players.show', currentPlayer);
+      this.transitionTo('players.show', currentPlayer.get('model'));
       return;
     }
   }
