@@ -4,7 +4,7 @@ export default Ember.Route.extend({
   updateFromPayload:  function() {
     var _this = this;
 
-    return function(jsonString) {
+    var _updateFromPayload = function(jsonString) {
       /**
        * Normalize the JSON's for DS.Store.push and sideload all associations.
        *
@@ -17,7 +17,6 @@ export default Ember.Route.extend({
        */
       var data = JSON.parse(jsonString);
 
-      // TODO: Move each of these into a generatePayload model method.
       // console.log('pushing payload: ' + jsonString);
       if (data.level) {
         data.level.players = data.level.player_ids;
@@ -61,6 +60,8 @@ export default Ember.Route.extend({
 
       return;
     };
+
+    return _updateFromPayload;
   }.property(),
 
   activate: function() {

@@ -10,7 +10,7 @@ export default Ember.View.extend({
   renderCanvasCtx:  function() {
     var _this = this;
 
-    return function() {
+    var _renderCanvasCtx = function() {
       var currentLevel = _this.get('currentLevel'),
           width        = _this.get('currentLevel.width'),
           height       = _this.get('currentLevel.height'),
@@ -30,6 +30,8 @@ export default Ember.View.extend({
 
       return;
     };
+
+    return _renderCanvasCtx;
   }.property(),
 
   didInsertElement: function() {
