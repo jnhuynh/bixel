@@ -6,16 +6,25 @@
     z-index:   2;
 
     .exit-game {
+      left:      5px;
       position:  absolute;
       top:       5px;
-      left:      5px;
     }
 
     .player-pos {
+      bottom:    5px;
       display:   inline-block;
+      margin:    0px;
       position:  absolute;
-      top:       5px;
       right:     5px;
+    }
+
+    .player-health {
+      margin:    0px;
+      position:  absolute;
+      right:     5px;
+      top:       5px;
+      width:     200px;
     }
   }
 

@@ -17,6 +17,7 @@ export default Ember.Route.extend({
        */
       var data = JSON.parse(jsonString);
 
+      // TODO: Move each of these into a generatePayload model method.
       // console.log('pushing payload: ' + jsonString);
       if (data.level) {
         data.level.players = data.level.player_ids;
@@ -29,6 +30,12 @@ export default Ember.Route.extend({
         data.players.forEach(function(player) {
           player.level = player.level_id;
           delete player.level_id;
+
+          player.currentHealth = player.current_health;
+          delete player.current_health;
+
+          player.maxHealth = player.max_health;
+          delete player.max_health;
 
           player.spriteSheet = player.sprite_sheet_id;
           delete player.sprite_sheet_id;
