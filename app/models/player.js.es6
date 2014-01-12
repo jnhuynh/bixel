@@ -1,3 +1,4 @@
+// TODO: Move a bunch of methods to PlayerController
 export default DS.Model.extend({
   name:       DS.attr('string'),
   direction:  DS.attr('string'),
@@ -35,6 +36,7 @@ export default DS.Model.extend({
     return;
   },
 
+  moved: false,
   move: function(direction) {
     var _this         = this,
         level         = this.get('level'),
@@ -46,6 +48,7 @@ export default DS.Model.extend({
         collision     = null;
 
     this.set('direction', direction);
+    this.set('moved', true);
 
     switch(direction) {
       case 'up':

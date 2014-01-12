@@ -18,13 +18,10 @@ export default Ember.View.extend({
   currentLevel:   Ember.computed.alias('controller.currentLevel'),
 
   keyDown: function(event) {
-    var dispatcher               = this.get('dispatcher'),
-        currentLevel             = this.get('currentLevel'),
+    var currentLevel             = this.get('currentLevel'),
         currentPlayer            = this.get('currentPlayer'),
         currentPlayerSpriteSheet = currentPlayer.get('spriteSheet'),
-        direction                = null,
-        coord                    = null,
-        data                     = null;
+        direction                = null;
 
     switch(event.which) {
       case 38:
@@ -48,24 +45,6 @@ export default Ember.View.extend({
     if (direction) {
       currentPlayer.move(direction);
       currentPlayerSpriteSheet.transitionState();
-
-      data = {
-        level: {
-          id: currentLevel.get('id')
-        },
-        player: {
-          id:         currentPlayer.get('id'),
-          x:          currentPlayer.get('x'),
-          y:          currentPlayer.get('y'),
-          direction:  currentPlayer.get('direction')
-        },
-        sprite_sheet: {
-          id:     currentPlayerSpriteSheet.get('id'),
-          state:  currentPlayerSpriteSheet.get('state')
-        }
-      };
-
-      dispatcher.trigger('player_moved', data);
     }
 
     return;
