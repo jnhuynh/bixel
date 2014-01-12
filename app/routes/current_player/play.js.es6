@@ -64,10 +64,10 @@ export default Ember.Route.extend({
   }.property(),
 
   activate: function() {
-    var level             = this.modelFor('level'),
-        player            = this.modelFor('player'),
+    var currentLevel      = this.controllerFor('currentLevel'),
+        currentPlayer     = this.controllerFor('currentPlayer'),
         dispatcher        = new WebSocketRails('localhost:3000/websocket'),
-        updateChannel     = dispatcher.subscribe('level' + level.get('id')),
+        updateChannel     = dispatcher.subscribe('level' + currentLevel.get('id')),
         updateFromPayload = this.get('updateFromPayload'),
         data              = null;
 
@@ -76,13 +76,13 @@ export default Ember.Route.extend({
 
     updateChannel.bind('updated', updateFromPayload);
 
-    level.get('players').pushObject(player);
+    currentLevel.get('players.content').pushObject(currentPlayer.get('model'));
     data = {
       level: {
-        id: level.get('id')
+        id: currentLevel.get('id')
       },
       player: {
-        id: player.get('id')
+        id: currentPlayer.get('id')
       }
     };
     dispatcher.trigger('player_entered', data);
@@ -91,10 +91,10 @@ export default Ember.Route.extend({
   },
 
   deactivate: function() {
-    var level      = this.modelFor('level'),
-        dispatcher = this.get('dispatcher');
+    var currentLevel = this.controllerFor('currentLevel'),
+        dispatcher   = this.get('dispatcher');
 
-    dispatcher.unsubscribe('level' + level.get('id'));
+    dispatcher.unsubscribe('level' + currentLevel.get('id'));
 
     this.set('dispatcher', null);
     this.set('updateChannel', null);
@@ -103,13 +103,9 @@ export default Ember.Route.extend({
   },
 
   setupController: function(controller, model) {
-    var level         = this.modelFor('level'),
-        player        = this.modelFor('player'),
-        dispatcher    = this.get('dispatcher'),
+    var dispatcher    = this.get('dispatcher'),
         updateChannel = this.get('updateChannel');
 
-    controller.set('currentLevel', level);
-    controller.set('currentPlayer', player);
     controller.set('dispatcher', dispatcher);
     controller.set('updateChannel', updateChannel);
 
@@ -118,16 +114,16 @@ export default Ember.Route.extend({
 
   actions: {
     exitGame: function() {
-      var level         = this.controller.get('currentLevel'),
+      var currentLevel  = this.controller.get('currentLevel'),
           currentPlayer = this.controller.get('currentPlayer'),
           dispatcher    = this.get('dispatcher'),
           data          = null;
 
-      level.get('players').removeObject(currentPlayer);
+      currentLevel.get('players.content').removeObject(currentPlayer.get('model'));
 
       data = {
         level: {
-          id: level.get('id')
+          id: currentLevel.get('id')
         },
         player: {
           id: currentPlayer.get('id')

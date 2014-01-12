@@ -11,10 +11,10 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    playGame: function(level) {
+    playGame: function(currentLevel) {
       var currentPlayer = this.get('currentModel');
 
-      this.transitionTo('player.play', level, currentPlayer);
+      this.transitionTo('currentPlayer.play', currentLevel, currentPlayer);
       return;
     }
   }
