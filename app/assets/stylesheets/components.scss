@@ -2,11 +2,12 @@
   position: relative;
 
   .progress-ratio {
-    height:    100%;
-    margin:    auto;
-    position:  absolute;
-    width:     100%;
-    z-index:   2;
+    height:       100%;
+    margin:       auto;
+    position:     absolute;
+    text-shadow:  1px 1px 2px black;
+    width:        100%;
+    z-index:      2;
   }
 
   .progress {
