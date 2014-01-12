@@ -3,5 +3,11 @@ export default DS.Model.extend({
   width:      DS.attr('number'),
   height:     DS.attr('number'),
 
-  players:    DS.hasMany('player')
+  players:    DS.hasMany('player'),
+
+  payload: function() {
+    return {
+      id: this.get('id')
+    };
+  }.property()
 });

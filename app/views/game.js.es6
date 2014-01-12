@@ -23,22 +23,10 @@ export default Ember.View.extend({
         currentPlayerSpriteSheet = this.get('currentPlayer.spriteSheet'),
         data                     = null;
 
-    // TODO: make this into generate payload.
     data = {
-      level: {
-        id: currentLevel.get('id')
-      },
-      player: {
-        id:              currentPlayer.get('id'),
-        x:               currentPlayer.get('x'),
-        y:               currentPlayer.get('y'),
-        direction:       currentPlayer.get('direction'),
-        current_health:  currentPlayer.get('currentHealth')
-      },
-      sprite_sheet: {
-        id:     currentPlayerSpriteSheet.get('id'),
-        state:  currentPlayerSpriteSheet.get('state')
-      }
+      level:         currentLevel.get('payload'),
+      player:        currentPlayer.get('payload'),
+      sprite_sheet:  currentPlayerSpriteSheet.get('payload')
     };
 
     dispatcher.trigger('player_moved', data);

@@ -9,5 +9,15 @@ export default DS.Model.extend({
   maxHealth:      DS.attr('number'),
 
   level:        DS.belongsTo('level'),
-  spriteSheet:  DS.belongsTo('spriteSheet')
+  spriteSheet:  DS.belongsTo('spriteSheet'),
+
+  payload: function() {
+    return {
+      id:              this.get('id'),
+      x:               this.get('x'),
+      y:               this.get('y'),
+      direction:       this.get('direction'),
+      current_health:  this.get('currentHealth')
+    };
+  }.property('x', 'y', 'direction', 'currentHealth')
 });
