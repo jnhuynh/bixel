@@ -39,9 +39,10 @@ class Api::V1::GameController < WebsocketRails::BaseController
 
     puts("\n\nWebSocket => Api::V1::GameController#player_moved\n\n")
 
-    @player.x         = message[:player][:x]
-    @player.y         = message[:player][:y]
-    @player.direction = message[:player][:direction]
+    @player.x              = message[:player][:x]
+    @player.y              = message[:player][:y]
+    @player.direction      = message[:player][:direction]
+    @player.current_health = message[:player][:current_health]
     @player.save
 
     @sprite_sheet.state = message[:sprite_sheet][:state]
