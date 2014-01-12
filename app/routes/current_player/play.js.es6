@@ -122,12 +122,8 @@ export default Ember.Route.extend({
       currentLevel.get('players.model').removeObject(currentPlayer.get('model'));
 
       data = {
-        level: {
-          id: currentLevel.get('id')
-        },
-        player: {
-          id: currentPlayer.get('id')
-        }
+        level:   currentLevel.get('payload'),
+        player:  currentPlayer.get('payload')
       };
       dispatcher.trigger('player_exited', data);
 
