@@ -1,0 +1,15 @@
+.component-progress-bar {
+  position: relative;
+
+  .progress-ratio {
+    height:    100%;
+    margin:    auto;
+    position:  absolute;
+    width:     100%;
+    z-index:   2;
+  }
+
+  .progress {
+    z-index: 1;
+  }
+}

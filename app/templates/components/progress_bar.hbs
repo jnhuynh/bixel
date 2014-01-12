@@ -1,0 +1,8 @@
+<p class='label progress-ratio'>{{current}}/{{max}}</p>
+<div class='progress'>
+  <div class='progress-bar progress-bar-danger' role='progressbar'
+    {{bind-attr aria-valuenow='current' aria-valuemin='min' aria-valuemax='max'
+      style='widthString'}}>
+    <span class='sr-only'>{{percent}}%</span>
+  </div>
+</div>
