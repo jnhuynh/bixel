@@ -6,7 +6,7 @@ export default PlayerController.extend({
   currentLevel: Ember.computed.alias('controllers.currentLevel'),
 
   moved: false,
-  adjustYNegative: function() {
+  adjustY: function(cardinality) {
     var _this                = this,
         currentLevel         = this.get('currentLevel'),
         currentLevelEntities = this.get('currentLevel.entities'),
@@ -14,26 +14,49 @@ export default PlayerController.extend({
         stepSize             = 8,
         originalY            = this.get('y'),
         originalX            = this.get('x'),
-        newY                 = originalY - stepSize,
+        newY                 = null,
         collision            = null;
 
-    if (currentLevel.isInsideLevel(originalX, newY)) {
-      this.set('y', newY);
+    switch(cardinality) {
+      case 'negative':
+        newY = originalY - stepSize
 
-      collision = currentLevelEntities.filter(function(entity) {
-        return _this.hasCollision(entity);
-      }).get('firstObject');
+        if (currentLevel.isInsideLevel(originalX, newY)) {
+          this.set('y', newY);
 
-      if (collision) {
-        this.set('y', collision.get('y') + collision.get('tileSize'));
-      }
-    } else {
-      this.set('y', 0);
+          collision = currentLevelEntities.filter(function(entity) {
+            return _this.hasCollision(entity);
+          }).get('firstObject');
+
+          if (collision) {
+            this.set('y', collision.get('y') + collision.get('tileSize'));
+          }
+        } else {
+          this.set('y', 0);
+        }
+        break;
+      case 'positive':
+        newY = originalY + stepSize
+
+        if (currentLevel.isInsideLevel(originalX, newY + tileSize)) {
+          this.set('y', newY);
+
+          collision = currentLevelEntities.filter(function(entity) {
+            return _this.hasCollision(entity);
+          }).get('firstObject');
+
+          if (collision) {
+            this.set('y', collision.get('y') - tileSize);
+          }
+        } else {
+          this.set('y', currentLevel.get('height') - tileSize);
+        }
+        break;
     }
 
     return;
   },
-  adjustYPositive: function() {
+  adjustX: function(cardinality) {
     var _this                = this,
         currentLevel         = this.get('currentLevel'),
         currentLevelEntities = this.get('currentLevel.entities'),
@@ -41,75 +64,44 @@ export default PlayerController.extend({
         stepSize             = 8,
         originalY            = this.get('y'),
         originalX            = this.get('x'),
-        newY                 = originalY + stepSize,
+        newX                 = null,
         collision            = null;
 
-    if (currentLevel.isInsideLevel(originalX, newY + tileSize)) {
-      this.set('y', newY);
+    switch(cardinality) {
+      case 'negative':
+        newX = originalX - stepSize
 
-      collision = currentLevelEntities.filter(function(entity) {
-        return _this.hasCollision(entity);
-      }).get('firstObject');
+        if (currentLevel.isInsideLevel(newX, originalY)) {
+          this.set('x', newX);
 
-      if (collision) {
-        this.set('y', collision.get('y') - tileSize);
-      }
-    } else {
-      this.set('y', currentLevel.get('height') - tileSize);
-    }
+          collision = currentLevelEntities.filter(function(entity) {
+            return _this.hasCollision(entity);
+          }).get('firstObject');
 
-    return;
-  },
-  adjustXNegative: function() {
-    var _this                = this,
-        currentLevel         = this.get('currentLevel'),
-        currentLevelEntities = this.get('currentLevel.entities'),
-        tileSize             = this.get('spriteSheet.tileSize'),
-        stepSize             = 8,
-        originalY            = this.get('y'),
-        originalX            = this.get('x'),
-        newX                 = originalX - stepSize,
-        collision            = null;
+          if (collision) {
+            this.set('x', collision.get('x') + collision.get('tileSize'));
+          }
+        } else {
+          this.set('X', 0);
+        }
+        break;
+      case 'positive':
+        newX = originalX + stepSize
 
-    if (currentLevel.isInsideLevel(newX, originalY)) {
-      this.set('x', newX);
+        if (currentLevel.isInsideLevel(newX + tileSize, originalY)) {
+          this.set('x', newX);
 
-      collision = currentLevelEntities.filter(function(entity) {
-        return _this.hasCollision(entity);
-      }).get('firstObject');
+          collision = currentLevelEntities.filter(function(entity) {
+            return _this.hasCollision(entity);
+          }).get('firstObject');
 
-      if (collision) {
-        this.set('x', collision.get('x') + collision.get('tileSize'));
-      }
-    } else {
-      this.set('x', 0);
-    }
-
-    return;
-  },
-  adjustXPositive: function() {
-    var _this                = this,
-        currentLevel         = this.get('currentLevel'),
-        currentLevelEntities = this.get('currentLevel.entities'),
-        tileSize             = this.get('spriteSheet.tileSize'),
-        stepSize             = 8,
-        originalY            = this.get('y'),
-        originalX            = this.get('x'),
-        newX                 = originalX + stepSize,
-        collision            = null;
-
-    if (currentLevel.isInsideLevel(newX + tileSize, originalY)) {
-      this.set('x', newX);
-
-      collision = currentLevelEntities.filter(function(entity) {
-        return _this.hasCollision(entity);
-      }).get('firstObject');
-
-      if (collision) {
-        this.set('x', collision.get('x') - tileSize);
-      }
-    } else {
-      this.set('x', currentLevel.get('width') - tileSize);
+          if (collision) {
+            this.set('x', collision.get('x') - tileSize);
+          }
+        } else {
+          this.set('x', currentLevel.get('width') - tileSize);
+        }
+        break;
     }
 
     return;
@@ -117,16 +109,16 @@ export default PlayerController.extend({
   move: function(direction) {
     switch(direction) {
       case 'up':
-        this.adjustYNegative();
+        this.adjustY('negative');
         break;
       case 'down':
-        this.adjustYPositive();
+        this.adjustY('positive');
         break;
       case 'left':
-        this.adjustXNegative();
+        this.adjustX('negative');
         break;
       case 'right':
-        this.adjustXPositive();
+        this.adjustX('positive');
         break;
     }
 
