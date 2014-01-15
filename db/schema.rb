@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140111231308) do
+ActiveRecord::Schema.define(version: 20140115035137) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,10 +40,11 @@ ActiveRecord::Schema.define(version: 20140111231308) do
     t.string   "src"
     t.integer  "state"
     t.integer  "number_states"
-    t.integer  "tile_size"
     t.integer  "player_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tile_width",    default: 0
+    t.integer  "tile_height",   default: 0
   end
 
 end
