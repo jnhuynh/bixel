@@ -10,23 +10,24 @@ export default Ember.ObjectController.extend({
   },
 
   keyFrameCoords: function(direction) {
-    var state    = this.get('state'),
-        tileSize = this.get('tileSize'),
-        x        = state * tileSize,
-        y        = 0;
+    var state      = this.get('state'),
+        tileWidth  = this.get('tileWidth'),
+        tileHeight = this.get('tileHeight'),
+        x          = state * tileWidth,
+        y          = 0;
 
     switch(direction) {
       case 'up':
-        y = tileSize * 0;
+        y = tileHeight * 0;
         break;
       case 'down':
-        y = tileSize * 1;
+        y = tileHeight * 1;
         break;
       case 'left':
-        y = tileSize * 2;
+        y = tileHeight * 2;
         break;
       case 'right':
-        y = tileSize * 3;
+        y = tileHeight * 3;
         break;
     }
     return { x: x, y: y };

@@ -1,4 +1,3 @@
-// TODO: Move a bunch of methods to PlayerController
 export default DS.Model.extend({
   name:       DS.attr('string'),
   direction:  DS.attr('string'),

@@ -51,8 +51,10 @@ export default Ember.Route.extend({
           spriteSheet.numberStates = spriteSheet.number_states;
           delete spriteSheet.number_states;
 
-          spriteSheet.tileSize = spriteSheet.tile_size;
-          delete spriteSheet.tile_size;
+          spriteSheet.tileWidth  = spriteSheet.tile_width;
+          spriteSheet.tileHeight = spriteSheet.tile_height;
+          delete spriteSheet.tile_width;
+          delete spriteSheet.tile_height;
 
           _this.store.push('spriteSheet', spriteSheet);
         });
