@@ -31,6 +31,8 @@ class Api::V1::PlayersController < ApplicationController
   private
 
     def player_params
-      params.require(:player).permit(:name, :x, :y, :direction, :current_health, :level_id)
+      params.require(:player).permit(:name,
+        :top_left_x, :top_left_y, :direction,
+        :current_health, :level_id)
     end
 end

@@ -13,8 +13,8 @@ export default PlayerController.extend({
         tileWidth            = this.get('spriteSheet.tileWidth'),
         tileHeight           = this.get('spriteSheet.tileHeight'),
         stepSize             = 8,
-        originalY            = this.get('y'),
-        originalX            = this.get('x'),
+        originalY            = this.get('topLeftY'),
+        originalX            = this.get('topLeftX'),
         newY                 = null,
         collision            = null;
 
@@ -23,34 +23,35 @@ export default PlayerController.extend({
         newY = originalY - stepSize
 
         if (currentLevel.isInsideLevel(originalX, newY)) {
-          this.set('y', newY);
+          this.set('topLeftY', newY);
 
           collision = currentLevelEntities.filter(function(entity) {
             return _this.hasCollision(entity);
           }).get('firstObject');
 
           if (collision) {
-            this.set('y', collision.get('y') + collision.get('tileHeight'));
+            this.set('topLeftY',
+              collision.get('topLeftY') + collision.get('tileHeight'));
           }
         } else {
-          this.set('y', 0);
+          this.set('topLeftY', 0);
         }
         break;
       case 'positive':
         newY = originalY + stepSize
 
         if (currentLevel.isInsideLevel(originalX, newY + tileHeight)) {
-          this.set('y', newY);
+          this.set('topLeftY', newY);
 
           collision = currentLevelEntities.filter(function(entity) {
             return _this.hasCollision(entity);
           }).get('firstObject');
 
           if (collision) {
-            this.set('y', collision.get('y') - tileHeight);
+            this.set('topLeftY', collision.get('topLeftY') - tileHeight);
           }
         } else {
-          this.set('y', currentLevel.get('height') - tileHeight);
+          this.set('topLeftY', currentLevel.get('height') - tileHeight);
         }
         break;
     }
@@ -64,8 +65,8 @@ export default PlayerController.extend({
         tileWidth            = this.get('spriteSheet.tileWidth'),
         tileHeight           = this.get('spriteSheet.tileHeight'),
         stepSize             = 8,
-        originalY            = this.get('y'),
-        originalX            = this.get('x'),
+        originalY            = this.get('topLeftY'),
+        originalX            = this.get('topLeftX'),
         newX                 = null,
         collision            = null;
 
@@ -74,34 +75,35 @@ export default PlayerController.extend({
         newX = originalX - stepSize
 
         if (currentLevel.isInsideLevel(newX, originalY)) {
-          this.set('x', newX);
+          this.set('topLeftX', newX);
 
           collision = currentLevelEntities.filter(function(entity) {
             return _this.hasCollision(entity);
           }).get('firstObject');
 
           if (collision) {
-            this.set('x', collision.get('x') + collision.get('tileWidth'));
+            this.set('topLeftX',
+              collision.get('topLeftX') + collision.get('tileWidth'));
           }
         } else {
-          this.set('X', 0);
+          this.set('topLeftX', 0);
         }
         break;
       case 'positive':
         newX = originalX + stepSize
 
         if (currentLevel.isInsideLevel(newX + tileWidth, originalY)) {
-          this.set('x', newX);
+          this.set('topLeftX', newX);
 
           collision = currentLevelEntities.filter(function(entity) {
             return _this.hasCollision(entity);
           }).get('firstObject');
 
           if (collision) {
-            this.set('x', collision.get('x') - tileWidth);
+            this.set('topLeftX', collision.get('topLeftX') - tileWidth);
           }
         } else {
-          this.set('x', currentLevel.get('width') - tileWidth);
+          this.set('topLeftX', currentLevel.get('width') - tileWidth);
         }
         break;
     }

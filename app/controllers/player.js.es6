@@ -29,9 +29,17 @@ export default Ember.ObjectController.extend({
     }
   }.property('spriteSheet'),
 
+  bottomRightX: function() {
+    return this.get('spriteSheet.tileWidth') + this.get('topLeftX');
+  }.property('spriteSheet', 'topLeftX'),
+
+  bottomRightY: function() {
+    return this.get('spriteSheet.tileHeight') + this.get('topLeftY');
+  }.property('spriteSheet', 'topLeftY'),
+
   renderToCanvasCtx: function(canvasCtx) {
-    var x                 = this.get('x'),
-        y                 = this.get('y'),
+    var topLeftX         = this.get('topLeftX'),
+        topLeftY         = this.get('topLeftY'),
         tileWidth         = this.get('tileWidth'),
         tileHeight        = this.get('tileHeight'),
         spriteSheet       = this.get('spriteSheet'),
@@ -40,18 +48,18 @@ export default Ember.ObjectController.extend({
 
     canvasCtx.drawImage(spriteSheetImage,
       spriteSheetCoords.x, spriteSheetCoords.y, tileWidth, tileHeight,
-      x, y, tileWidth, tileHeight);
+      topLeftX, topLeftY, tileWidth, tileHeight);
 
     return;
   },
 
   hasCollision: function(entity) {
-    var x                = this.get('x'),
-        y                = this.get('y'),
+    var topLeftX        = this.get('topLeftX'),
+        topLeftY        = this.get('topLeftY'),
         tileWidth        = this.get('tileWidth'),
         tileHeight       = this.get('tileHeight'),
-        entityX          = entity.get('x'),
-        entityY          = entity.get('y'),
+        entityTopLeftX  = entity.get('topLeftX'),
+        entityTopLeftY  = entity.get('topLeftY'),
         entityTileWidth  = entity.get('tileWidth'),
         entityTileHeight = entity.get('tileHeight'),
         xCollision       = false,
@@ -60,16 +68,16 @@ export default Ember.ObjectController.extend({
     if (this.get('content') === entity.get('content')) {
       return false;
     } else {
-      if (x < entityX) {
-        xCollision = ((entityX - x) < tileWidth);
+      if (topLeftX < entityTopLeftX) {
+        xCollision = ((entityTopLeftX - topLeftX) < tileWidth);
       } else {
-        xCollision = ((x - entityX) < entityTileWidth);
+        xCollision = ((topLeftX - entityTopLeftX) < entityTileWidth);
       }
 
-      if (y < entityY) {
-        yCollision = ((entityY - y) < tileHeight);
+      if (topLeftY < entityTopLeftY) {
+        yCollision = ((entityTopLeftY - topLeftY) < tileHeight);
       } else {
-        yCollision = ((y - entityY) < entityTileHeight);
+        yCollision = ((topLeftY - entityTopLeftY) < entityTileHeight);
       }
 
       return (xCollision && yCollision);

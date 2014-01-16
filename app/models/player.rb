@@ -5,8 +5,8 @@
 #  id             :integer          not null, primary key
 #  name           :string(255)
 #  direction      :string(255)
-#  x              :integer
-#  y              :integer
+#  top_left_x     :integer
+#  top_left_y     :integer
 #  level_id       :integer
 #  created_at     :datetime
 #  updated_at     :datetime

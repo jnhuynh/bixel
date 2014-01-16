@@ -19,13 +19,13 @@ export default Ember.View.extend({
       renderCtx.clearRect(0, 0, width, height);
 
       currentLevel.get('entities').forEach(function(entity) {
-        var x          = entity.get('x'),
-            y          = entity.get('y'),
+        var topLeftX   = entity.get('topLeftX'),
+            topLeftY   = entity.get('topLeftY'),
             tileWidth  = entity.get('tileWidth'),
             tileHeight = entity.get('tileHeight');
 
         renderCtx.fillStype = '#000000';
-        renderCtx.fillRect(x, y, tileWidth, tileHeight);
+        renderCtx.fillRect(topLeftX, topLeftY, tileWidth, tileHeight);
         entity.renderToCanvasCtx(renderCtx);
       });
 

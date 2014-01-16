@@ -30,6 +30,12 @@ export default Ember.Route.extend({
           player.level = player.level_id;
           delete player.level_id;
 
+          player.topLeftX = player.top_left_x;
+          delete player.top_left_x;
+
+          player.topLeftY = player.top_left_y;
+          delete player.top_left_y;
+
           player.currentHealth = player.current_health;
           delete player.current_health;
 

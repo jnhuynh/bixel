@@ -1,8 +1,9 @@
 export default DS.Model.extend({
-  name:       DS.attr('string'),
+  name:  DS.attr('string'),
+
   direction:  DS.attr('string'),
-  x:          DS.attr('number'),
-  y:          DS.attr('number'),
+  topLeftX:  DS.attr('number'),
+  topLeftY:  DS.attr('number'),
 
   currentHealth:  DS.attr('number'),
   maxHealth:      DS.attr('number'),
@@ -13,10 +14,10 @@ export default DS.Model.extend({
   payload: function() {
     return {
       id:              this.get('id'),
-      x:               this.get('x'),
-      y:               this.get('y'),
+      top_left_x:      this.get('topLeftX'),
+      top_left_y:      this.get('topLeftY'),
       direction:       this.get('direction'),
       current_health:  this.get('currentHealth')
     };
-  }.property('x', 'y', 'direction', 'currentHealth')
+  }.property('topLeftX', 'topLeftY', 'direction', 'currentHealth')
 });
