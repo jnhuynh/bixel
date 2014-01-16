@@ -10,8 +10,8 @@ export default PlayerController.extend({
     var _this                = this,
         currentLevel         = this.get('currentLevel'),
         currentLevelEntities = this.get('currentLevel.entities'),
-        tileWidth            = this.get('spriteSheet.tileWidth'),
-        tileHeight           = this.get('spriteSheet.tileHeight'),
+        tileWidth            = this.get('tileWidth'),
+        tileHeight           = this.get('tileHeight'),
         stepSize             = 8,
         originalY            = this.get('topLeftY'),
         originalX            = this.get('topLeftX'),
@@ -20,7 +20,7 @@ export default PlayerController.extend({
 
     switch(cardinality) {
       case 'negative':
-        newY = originalY - stepSize
+        newY = originalY - stepSize;
 
         if (currentLevel.isInsideLevel(originalX, newY)) {
           this.set('topLeftY', newY);
@@ -38,7 +38,7 @@ export default PlayerController.extend({
         }
         break;
       case 'positive':
-        newY = originalY + stepSize
+        newY = originalY + stepSize;
 
         if (currentLevel.isInsideLevel(originalX, newY + tileHeight)) {
           this.set('topLeftY', newY);
@@ -62,8 +62,8 @@ export default PlayerController.extend({
     var _this                = this,
         currentLevel         = this.get('currentLevel'),
         currentLevelEntities = this.get('currentLevel.entities'),
-        tileWidth            = this.get('spriteSheet.tileWidth'),
-        tileHeight           = this.get('spriteSheet.tileHeight'),
+        tileWidth            = this.get('tileWidth'),
+        tileHeight           = this.get('tileHeight'),
         stepSize             = 8,
         originalY            = this.get('topLeftY'),
         originalX            = this.get('topLeftX'),
@@ -72,7 +72,7 @@ export default PlayerController.extend({
 
     switch(cardinality) {
       case 'negative':
-        newX = originalX - stepSize
+        newX = originalX - stepSize;
 
         if (currentLevel.isInsideLevel(newX, originalY)) {
           this.set('topLeftX', newX);
@@ -90,7 +90,7 @@ export default PlayerController.extend({
         }
         break;
       case 'positive':
-        newX = originalX + stepSize
+        newX = originalX + stepSize;
 
         if (currentLevel.isInsideLevel(newX + tileWidth, originalY)) {
           this.set('topLeftX', newX);
