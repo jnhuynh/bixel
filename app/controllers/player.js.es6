@@ -54,12 +54,12 @@ export default Ember.ObjectController.extend({
   },
 
   hasCollision: function(entity) {
-    var topLeftX        = this.get('topLeftX'),
-        topLeftY        = this.get('topLeftY'),
+    var topLeftX         = this.get('topLeftX'),
+        topLeftY         = this.get('topLeftY'),
         tileWidth        = this.get('tileWidth'),
         tileHeight       = this.get('tileHeight'),
-        entityTopLeftX  = entity.get('topLeftX'),
-        entityTopLeftY  = entity.get('topLeftY'),
+        entityTopLeftX   = entity.get('topLeftX'),
+        entityTopLeftY   = entity.get('topLeftY'),
         entityTileWidth  = entity.get('tileWidth'),
         entityTileHeight = entity.get('tileHeight'),
         xCollision       = false,
