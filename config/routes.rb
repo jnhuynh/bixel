@@ -3,7 +3,6 @@ Bixel::Application.routes.draw do
     namespace :v1 do
       resources :areas
       resources :players
-      resources :spritesheets
     end
   end
 end
