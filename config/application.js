@@ -1,4 +1,5 @@
 //= require jquery
+//= require bootstrap
 //= require environment
 //= require ember-appkit
 //= require_self
