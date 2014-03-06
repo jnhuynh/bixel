@@ -37,6 +37,8 @@ GEM
       ember-source
       execjs
       handlebars-source
+    bootstrap-sass (3.1.1.0)
+      sass (~> 3.2)
     builder (3.1.4)
     ember-appkit-rails (0.4.0)
       active_model_serializers
@@ -129,6 +131,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   annotate
+  bootstrap-sass
   ember-appkit-rails
   jquery-rails
   pg
