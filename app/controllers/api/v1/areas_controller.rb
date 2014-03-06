@@ -3,4 +3,9 @@ class Api::V1::AreasController < ApplicationController
     @areas = Area.all
     render(:json => @areas)
   end
+
+  def show
+    @area = Area.where(:id => params[:id])
+    render(:json => @area)
+  end
 end
