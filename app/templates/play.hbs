@@ -1,21 +1,29 @@
 <div class="row">
-  <div class="col-xs-12">
-      <table class="table table-striped table-bordered">
-        <tbody>
-          <tr>
-            <td>Selected Area</td>
-            <td>Selected Player</td>
-          </tr>
-          <tr>
-            <td>{{selectedArea.name}}</td>
-            <td>{{selectedPlayer.name}}</td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="col-xs-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Selected Area</div>
+      <div class="panel-body text-center">
+        {{#if selectedArea}}
+          <p>{{selectedArea.name}}</p>
+        {{/if}}
+      </div>
+    </div>
+
+    {{select-one selectables=areas selected=selectedArea}}
+  </div>
+  <div class="col-xs-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Selected Player</div>
+      <div class="panel-body text-center">
+        {{#if selectedPlayer}}
+          <p>{{selectedPlayer.name}}</p>
+          <img {{bind-attr src="selectedPlayer.spritesheet.src"}}>
+        {{/if}}
+      </div>
+    </div>
+
+    {{select-one selectables=players selected=selectedPlayer}}
   </div>
 </div>
-
-{{select-one selectables=areas selected=selectedArea}}
-{{select-one selectables=players selected=selectedPlayer}}
 
 {{outlet}}

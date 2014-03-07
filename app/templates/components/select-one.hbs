@@ -2,8 +2,8 @@
   <tbody>
     {{#each choice in selectables}}
       <tr>
-        <td>{{choice.name}}</td>
-        <td>
+        <td class="text-center">{{choice.name}}</td>
+        <td class="text-center">
           <button type="button" class="btn btn-primary"
             {{action "selectChoice" choice}}>Select</button>
         </td>
