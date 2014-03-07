@@ -8,20 +8,22 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Bixel</a>
+      {{#link-to "index" class="navbar-brand"}}Bixel{{/link-to}}
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Play</a></li>
+        <li>{{#link-to "play"}}Play{{/link-to}}</li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 
-<div class="row">
-  <div class="col-xs-12">
-    {{outlet}}
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      {{outlet}}
+    </div>
   </div>
 </div>

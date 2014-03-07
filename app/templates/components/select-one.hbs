@@ -1,0 +1,13 @@
+<table class="table table-bordered">
+  <tbody>
+    {{#each choice in selectables}}
+      <tr>
+        <td>{{choice.name}}</td>
+        <td>
+          <button type="button" class="btn btn-primary"
+            {{action "selectChoice" choice}}>Select</button>
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
