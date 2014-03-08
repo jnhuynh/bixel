@@ -11,6 +11,7 @@
 
     {{select-one selectables=areas selected=selectedArea}}
   </div>
+
   <div class="col-xs-6">
     <div class="panel panel-default">
       <div class="panel-heading">Selected Player</div>
@@ -26,4 +27,9 @@
   </div>
 </div>
 
-{{outlet}}
+<div class="row">
+  <div class="col-xs-12">
+    <button type="button" id="start-game" class="btn btn-primary btn-lg"
+      disabled="disabled" {{action "startGame"}}>Start</button>
+  </div>
+</div>

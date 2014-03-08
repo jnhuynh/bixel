@@ -10,6 +10,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
     this.route("selection_menu");
+    this.route("play");
 });
 
 export default Router;
