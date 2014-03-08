@@ -1,4 +1,4 @@
-var PlayRoute = Ember.Route.extend({
+var SelectionMenuRoute = Ember.Route.extend({
     setupController: function(controller, model) {
         var players = this.store.find("player"),
             areas   = this.store.find("area");
@@ -8,4 +8,4 @@ var PlayRoute = Ember.Route.extend({
     }
 });
 
-export default PlayRoute;
+export default SelectionMenuRoute;

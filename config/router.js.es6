@@ -9,8 +9,7 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-    this.resource("play", function() {
-    });
+    this.route("selection_menu");
 });
 
 export default Router;
