@@ -10,19 +10,7 @@ var SelectionMenuController = Ember.Controller.extend({
         } else {
             button.attr("disabled", "disabled");
         }
-    }.observes("selectedArea", "selectedPlayer"),
-
-
-    actions: {
-        startGame: function() {
-            var selectedArea   = this.get("selectedArea"),
-                selectedPlayer = this.get("selectedPlayer");
-
-            if (!!selectedArea && !!selectedPlayer) {
-                console.log("transition happens here.");
-            }
-        }
-    }
+    }.observes("selectedArea", "selectedPlayer")
 });
 
 export default SelectionMenuController;
