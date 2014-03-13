@@ -2,10 +2,11 @@ import GamePlayerController from "app/controllers/game/player";
 import Player from "app/models/player";
 
 var GameRendererView = Ember.View.extend({
-    templateName: "game/renderer",
+    tagName: "canvas",
+    attributeBindings: "width height".w(),
 
-    canvas:     null,
-    canvasCtx:  null,
+    width:   Ember.computed.alias("area.width"),
+    height:  Ember.computed.alias("area.height"),
 
     // Passed in via template context
     area:      null,
@@ -23,9 +24,10 @@ var GameRendererView = Ember.View.extend({
     }.property("area.players"),
 
     // Canvas and Render
+    canvasCtx:       null,
     lastTimestamp:   null,
     renderCanvasID:  null,
-    renderCanvas: function() {
+    renderCanvas:    function() {
         var _this = this;
         var lastX = 0,
             lastY = 0;
@@ -56,17 +58,14 @@ var GameRendererView = Ember.View.extend({
 
     // Canvas Setup
     didInsertElement: function() {
-        var element        = this.get("element"),
-            canvas         = $(".game-renderer", element),
-            canvasCtx      = canvas[0].getContext("2d"),
-            area           = this.get("area"),
+        var element        = $(this.get("element")),
+            canvasCtx      = element[0].getContext("2d"),
             renderCanvas   = this.get("renderCanvas"),
             renderCanvasID = window.requestAnimationFrame(renderCanvas);
 
-        canvas.attr("width", area.get("width"));
-        canvas.attr("height", area.get("height"));
+        element.css("position", "absolute");
+        element.css("z-index", 1);
 
-        this.set("canvas", canvas);
         this.set("canvasCtx", canvasCtx);
         this.set("renderCanvasID", renderCanvasID);
     },
