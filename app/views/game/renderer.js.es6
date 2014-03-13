@@ -1,3 +1,6 @@
+import GamePlayerController from "app/controllers/game/player";
+import Player from "app/models/player";
+
 var GameRendererView = Ember.View.extend({
     templateName: "game/renderer",
 
@@ -6,7 +9,18 @@ var GameRendererView = Ember.View.extend({
 
     // Passed in via template context
     area:      null,
-    entities:  null,
+    players:  function() {
+        // Wrap player models with appropriate render controllers
+        var players = this.get("area.players").map(function(player) {
+            if (player instanceof Player) {
+                return GamePlayerController.create({
+                    content: player
+                });
+            }
+        });
+
+        return players;
+    }.property("area.players"),
 
     // Canvas and Render
     lastTimestamp:   null,
@@ -19,7 +33,7 @@ var GameRendererView = Ember.View.extend({
         return function step(timestamp) {
             if (!_this.get("isDestroyed")) {
                 var delta,
-                    entities      = _this.get("entityRenderControllers"),
+                    players       = _this.get("players"),
                     canvasCtx     = _this.get("canvasCtx"),
                     lastTimestamp = _this.get("lastTimestamp");
 
@@ -27,9 +41,9 @@ var GameRendererView = Ember.View.extend({
                 canvasCtx.clearRect(0, 0, 500, 500);
 
                 // Draw stuff
-                if (entities) {
-                    entities.forEach(function(entity) {
-                        entity.render(canvasCtx);
+                if (players) {
+                    players.forEach(function(player) {
+                        player.render(canvasCtx);
                     });
                 }
 

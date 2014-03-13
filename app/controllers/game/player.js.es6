@@ -1,7 +1,7 @@
 // Meant to be instantiated at by GameRendererView
-var GameEntityController = Ember.Controller.extend({
+var GamePlayerController = Ember.ObjectController.extend({
     // Assigned via GameRendererView
-    content:             null, // Entity
+    content:             null, // Player
     frameHeight:         Ember.computed.alias("spritesheet.frameHeight"),
     frameWidth:          Ember.computed.alias("spritesheet.frameWidth"),
     frameColumns:        Ember.computed.alias("spritesheet.frameColumns"),
@@ -11,7 +11,7 @@ var GameEntityController = Ember.Controller.extend({
 
     spritesheetImage: function() {
         // There is a delay from when we create this controller
-        // and when the player's spritesheet is full initialized.
+        // and when the player's spritesheet is fully initialized.
         //
         // We return null until src is something useful.
         if (!this.get("spritesheet.src")) {
@@ -73,8 +73,8 @@ var GameEntityController = Ember.Controller.extend({
             return;
         }
 
-        var entityX          = this.get("x"),
-            entityY          = this.get("y"),
+        var playerX          = this.get("x"),
+            playerY          = this.get("y"),
             frameWidth       = this.get("frameWidth"),
             frameHeight      = this.get("frameHeight"),
             spritesheetImage = this.get("spritesheetImage"),
@@ -83,8 +83,8 @@ var GameEntityController = Ember.Controller.extend({
 
         canvasCtx.drawImage(spritesheetImage,
             spritesheetX, spritesheetY, frameWidth, frameHeight,
-            entityX, entityY, frameWidth, frameHeight);
+            playerX, playerY, frameWidth, frameHeight);
     }
 });
 
-export default GameEntityController;
+export default GamePlayerController;
