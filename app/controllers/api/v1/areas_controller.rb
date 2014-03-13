@@ -5,7 +5,7 @@ class Api::V1::AreasController < ApplicationController
   end
 
   def show
-    @area = Area.where(:id => params[:id])
+    @area = Area.where(:id => params[:id]).first
     render(:json => @area)
   end
 end
