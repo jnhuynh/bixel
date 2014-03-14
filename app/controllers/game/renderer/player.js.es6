@@ -1,5 +1,5 @@
 // Meant to be instantiated at by GameRendererView
-var GamePlayerController = Ember.ObjectController.extend({
+var GameRendererPlayerController = Ember.ObjectController.extend({
     // Assigned via GameRendererView
     content:             null, // Player
     frameHeight:         Ember.computed.alias("spritesheet.frameHeight"),
@@ -87,4 +87,4 @@ var GamePlayerController = Ember.ObjectController.extend({
     }
 });
 
-export default GamePlayerController;
+export default GameRendererPlayerController;

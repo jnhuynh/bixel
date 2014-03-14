@@ -1,4 +1,4 @@
-import GamePlayerController from "app/controllers/game/player";
+import GameRendererPlayerController from "app/controllers/game/renderer/player";
 import Player from "app/models/player";
 
 var GameRendererView = Ember.View.extend({
@@ -14,7 +14,7 @@ var GameRendererView = Ember.View.extend({
         // Wrap player models with appropriate render controllers
         var players = this.get("area.players").map(function(player) {
             if (player instanceof Player) {
-                return GamePlayerController.create({
+                return GameRendererPlayerController.create({
                     content: player
                 });
             }
