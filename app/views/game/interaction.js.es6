@@ -1,4 +1,4 @@
-// import Rectangle from "appkit/models/rectangle";
+import Rectangle from "app/models/rectangle";
 
 // Handles all of the interactions associated with the player of this
 // game.
@@ -59,45 +59,30 @@ var GameInteractionView =  Ember.View.extend({
     updatePosition: function() {
         var newX,
             newY,
-            rectangle,
-            collisions,
-            // entities  = this.get("entities"),
             player    = this.get("player"),
+            step      = player.get("step"),
             direction = player.get("direction"),
             x         = player.get("x"),
-            y         = player.get("y"),
-            width     = player.get("width"),
-            height    = player.get("height");
+            y         = player.get("y");
 
         switch(direction) {
         case "up":
-            newY = y - 1;
+            newY = y - step;
             newX = x;
             break;
         case "down":
-            newY = y + 1;
+            newY = y + step;
             newX = x;
             break;
         case "left":
-            newX = x - 1;
+            newX = x - step;
             newY = y;
             break;
         case "right":
-            newX = x + 1;
+            newX = x + step;
             newY = y;
             break;
         }
-
-        // rectangle = Rectangle.create({
-            // x1:      newX,
-            // y1:      newY,
-            // width:   width,
-            // height:  height
-        // });
-
-        // collisions = entities.filter(function(entity) {
-            // return entity.collidesWith(rectangle);
-        // });
 
         player.set("x", newX);
         player.set("y", newY);
