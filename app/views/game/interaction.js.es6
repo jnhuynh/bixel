@@ -36,29 +36,22 @@ var GameInteractionView =  Ember.View.extend({
         // down  = a = 83
         // left  = s = 65
         // right = f = 68
-
-        // Directional Codes
-        // ------------------------------
-        // 0 = "up"
-        // 1 = "down"
-        // 2 = "left"
-        // 3 = "right"
         switch(keyCode) {
         case 38:
         case 87:
-            this.set("player.direction", 0);
+            this.set("player.direction", "up");
             break;
         case 40:
         case 83:
-            this.set("player.direction", 1);
+            this.set("player.direction", "down");
             break;
         case 37:
         case 65:
-            this.set("player.direction", 2);
+            this.set("player.direction", "left");
             break;
         case 39:
         case 68:
-            this.set("player.direction", 3);
+            this.set("player.direction", "right");
             break;
         }
     },
@@ -77,19 +70,19 @@ var GameInteractionView =  Ember.View.extend({
             height    = player.get("height");
 
         switch(direction) {
-        case 0: // up
+        case "up":
             newY = y - 1;
             newX = x;
             break;
-        case 1: // down
+        case "down":
             newY = y + 1;
             newX = x;
             break;
-        case 2: // left
+        case "left":
             newX = x - 1;
             newY = y;
             break;
-        case 3: // right
+        case "right":
             newX = x + 1;
             newY = y;
             break;
