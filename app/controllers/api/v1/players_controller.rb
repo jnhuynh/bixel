@@ -11,9 +11,15 @@ class Api::V1::PlayersController < ApplicationController
 
   def update
     @player = Player.where(:id => params[:id]).first
-    @area   = Area.where(:id => params[:player][:area]).first
 
-    @player.area = @area
+    x         = params[:player][:x]
+    y         = params[:player][:y]
+    direction = params[:player][:direction]
+
+    @player.x         = x.present? ? x : 0
+    @player.y         = y.present? ? y : 0
+    @player.direction = direction.present? ? direction : 0
+
     @player.save
 
     render(:json => @player)

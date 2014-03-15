@@ -5,6 +5,8 @@ var GameInteractionWalkController = Ember.ObjectController.extend({
     content:  null, // Player
 
     determineDirection: function(keyCode) {
+        var newDirection;
+
         // jQuery event.which key codes
         // ------------------------------
         // up    = 38
@@ -18,24 +20,29 @@ var GameInteractionWalkController = Ember.ObjectController.extend({
         switch(keyCode) {
         case 38:
         case 87:
-            return "up";
+            newDirection = "up";
+            break;
         case 40:
         case 83:
-            return "down";
+            newDirection = "down";
+            break;
         case 37:
         case 65:
-            return "left";
+            newDirection = "left";
+            break;
         case 39:
         case 68:
-            return "right";
+            newDirection = "right";
+            break;
         }
+
+        return newDirection;
     },
 
     determinePosition: function(direction) {
         var newX,
             newY,
             step      = this.get("step"),
-            direction = this.get("direction"),
             x         = this.get("x"),
             y         = this.get("y");
 
@@ -68,6 +75,9 @@ var GameInteractionWalkController = Ember.ObjectController.extend({
         this.set("direction", direction);
         this.set("x", position.x);
         this.set("y", position.y);
+
+        // Persist to backend
+        this.get("model").save();
     }
 });
 
