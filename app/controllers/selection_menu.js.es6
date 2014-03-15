@@ -3,12 +3,12 @@ var SelectionMenuController = Ember.Controller.extend({
     selectedArea:    null,
 
     handleStartGameButton: function() {
-        var button = $("#start-game");
+        var nextLi = $("#start-game").parent();
 
         if (!!this.get("selectedArea") && !!this.get("selectedPlayer")) {
-            button.removeAttr("disabled");
+            nextLi.removeClass("disabled");
         } else {
-            button.attr("disabled", "disabled");
+            nextLi.addClass("disabled");
         }
     }.observes("selectedArea", "selectedPlayer")
 });

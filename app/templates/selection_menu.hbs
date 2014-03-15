@@ -29,7 +29,10 @@
 
 <div class="row">
   <div class="col-xs-12">
-    <button type="button" id="start-game" class="btn btn-primary btn-lg"
-      disabled="disabled" {{action "startGame"}}>Start</button>
+    <ul class="pager">
+      <li class="next disabled">
+        <a id="start-game" {{action "startGame"}}>Start &rarr;</a>
+      </li>
+    </ul>
   </div>
 </div>
