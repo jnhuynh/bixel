@@ -29,10 +29,11 @@ var PlayRoute = Ember.Route.extend({
         exitGame: function() {
             var controller              = this.get("controller"),
                 selectionMenuController = this.controllerFor("selection_menu"),
-                player                  = controller.get("player");
+                player                  = controller.get("player"),
+                area                    = controller.get("area");
 
-                player.set("area", null);
-                player.save();
+                area.get("players").removeObject(player);
+                area.save();
 
                 selectionMenuController.set("selectedArea", null);
                 selectionMenuController.set("selectedPlayer", null);

@@ -14,8 +14,9 @@ var SelectionMenuRoute = Ember.Route.extend({
                 selectedPlayer = controller.get("selectedPlayer");
 
             if (!!selectedArea && !!selectedPlayer) {
-                selectedPlayer.set("area", selectedArea);
-                selectedPlayer.save();
+                selectedArea.get("players").pushObject(selectedPlayer);
+                selectedArea.save();
+
                 this.transitionTo("play");
             }
         }
