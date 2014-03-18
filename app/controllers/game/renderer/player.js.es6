@@ -24,43 +24,6 @@ var GameRendererPlayerController = Ember.ObjectController.extend({
         this.set("spritesheetImage", spritesheetImage);
     }.property("spritesheet.src"),
 
-    // Bump currentFrameColumn for animation
-    updateCurrentFrameColumn: function() {
-        var currentFrameColumn = this.get("currentFrameColumn"),
-            frameColumns       = this.get("frameColumns");
-
-        this.set("currentFrameColumn", (currentFrameColumn + 1) % frameColumns);
-    }.observes("x", "y"),
-
-    // Bump currentFrameRow for animation
-    //
-    // "up"    = 0
-    // "down"  = 1
-    // "left"  = 2
-    // "right" = 3
-    updateCurrentFrameRow: function() {
-        var currentFrameRow,
-            frameRows = this.get("frameRows"),
-            direction = this.get("direction");
-
-        switch (direction) {
-        case "up":
-            currentFrameRow = 0;
-            break;
-        case "down":
-            currentFrameRow = 1;
-            break;
-        case "left":
-            currentFrameRow = 2;
-            break;
-        case "right":
-            currentFrameRow = 3;
-            break;
-        }
-
-        this.set("currentFrameRow", currentFrameRow);
-    }.observes("direction"),
-
     // Animation
     // ----------------
     //
@@ -73,13 +36,16 @@ var GameRendererPlayerController = Ember.ObjectController.extend({
             return;
         }
 
-        var playerX          = this.get("x"),
-            playerY          = this.get("y"),
-            frameWidth       = this.get("frameWidth"),
-            frameHeight      = this.get("frameHeight"),
-            spritesheetImage = this.get("spritesheetImage"),
-            spritesheetX     = frameWidth * this.get("currentFrameColumn"),
-            spritesheetY     = frameHeight * this.get("currentFrameRow");
+        var playerX            = this.get("x"),
+            playerY            = this.get("y"),
+            frameWidth         = this.get("frameWidth"),
+            frameHeight        = this.get("frameHeight"),
+            direction          = this.get("direction"),
+            currentFrameRow    = this.get("currentFrameRow"),
+            currentFrameColumn = this.get("currentFrameColumn"),
+            spritesheetImage   = this.get("spritesheetImage"),
+            spritesheetX       = frameWidth * this.get("currentFrameColumn"),
+            spritesheetY       = frameHeight * this.get("currentFrameRow");
 
         canvasCtx.drawImage(spritesheetImage,
             spritesheetX, spritesheetY, frameWidth, frameHeight,

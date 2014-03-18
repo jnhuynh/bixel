@@ -2,7 +2,12 @@ import Rectangle from "app/models/rectangle";
 
 var GameInteractionWalkController = Ember.ObjectController.extend({
     // Assigned via GameInteractionView
-    content:  null, // Player
+    content:             null, // Player
+    frameColumns:        Ember.computed.alias("spritesheet.frameColumns"),
+    frameRows:           Ember.computed.alias("spritesheet.frameRows"),
+    currentFrameColumn:  Ember.computed.alias("spritesheet.currentFrameColumn"),
+    currentFrameRow:     Ember.computed.alias("spritesheet.currentFrameRow"),
+
 
     determineDirection: function(keyCode) {
         var newDirection;
@@ -68,16 +73,48 @@ var GameInteractionWalkController = Ember.ObjectController.extend({
         return { x: newX, y: newY };
     },
 
+    determineCurrentFrameColumn: function() {
+        var currentFrameColumn = this.get("currentFrameColumn"),
+            frameColumns       = this.get("frameColumns");
+
+        // Bump currentFrameColumn for animation
+        return ((currentFrameColumn + 1) % frameColumns);
+    },
+
+    determineCurrentFrameRow: function(direction) {
+        var currentFrameRow,
+            frameRows = this.get("frameRows");
+
+        switch (direction) {
+        case "up":
+            currentFrameRow = 0;
+            break;
+        case "down":
+            currentFrameRow = 1;
+            break;
+        case "left":
+            currentFrameRow = 2;
+            break;
+        case "right":
+            currentFrameRow = 3;
+            break;
+        }
+
+        return currentFrameRow;
+    },
+
+
     walk: function(evt) {
-        var direction = this.determineDirection(evt.which),
-            position  = this.determinePosition(direction);
+        var direction          = this.determineDirection(evt.which),
+            position           = this.determinePosition(direction),
+            currentFrameColumn = this.determineCurrentFrameColumn(),
+            currentFrameRow    = this.determineCurrentFrameRow(direction);
 
         this.set("direction", direction);
         this.set("x", position.x);
         this.set("y", position.y);
-
-        // Persist to backend
-        this.get("model").save();
+        this.set("currentFrameColumn", currentFrameColumn);
+        this.set("currentFrameRow", currentFrameRow);
     }
 });
 
