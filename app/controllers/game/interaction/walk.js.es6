@@ -146,6 +146,8 @@ var GameInteractionWalkController = Ember.ObjectController.extend({
             this.set("y", position.y);
             this.set("currentFrameColumn", currentFrameColumn);
             this.set("currentFrameRow", currentFrameRow);
+
+            this.get("model").save();
         }
     }
 });
