@@ -1,0 +1,1 @@
+define("config/adapters/application",["exports"],function(e){"use strict";e["default"]=DS.RESTAdapter.extend({namespace:"api/v1"})});

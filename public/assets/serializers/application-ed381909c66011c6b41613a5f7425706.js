@@ -1,0 +1,1 @@
+define("app/serializers/application",["exports"],function(e){"use strict";var r=DS.RESTSerializer.extend({keyForAttribute:function(e){return Ember.String.underscore(e)}});e["default"]=r});
