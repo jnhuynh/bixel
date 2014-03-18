@@ -8,9 +8,37 @@ var GameInteractionWalkController = Ember.ObjectController.extend({
     currentFrameColumn:  Ember.computed.alias("spritesheet.currentFrameColumn"),
     currentFrameRow:     Ember.computed.alias("spritesheet.currentFrameRow"),
 
+    isValidKeyCode: function(keyCode) {
+        var valid = false;
+
+        // jQuery event.which key codes
+        // ------------------------------
+        // up    = 38
+        // down  = 40
+        // left  = 37
+        // right = 39
+        // up    = w = 87
+        // down  = a = 83
+        // left  = s = 65
+        // right = f = 68
+        switch(keyCode) {
+        case 38:
+        case 87:
+        case 40:
+        case 83:
+        case 37:
+        case 65:
+        case 39:
+        case 68:
+            valid = true;
+            break;
+        }
+
+        return valid;
+    },
 
     determineDirection: function(keyCode) {
-        var newDirection;
+        var newDirection = this.get("direction");
 
         // jQuery event.which key codes
         // ------------------------------
@@ -45,11 +73,11 @@ var GameInteractionWalkController = Ember.ObjectController.extend({
     },
 
     determinePosition: function(direction) {
-        var newX,
-            newY,
-            step      = this.get("step"),
-            x         = this.get("x"),
-            y         = this.get("y");
+        var step = this.get("step"),
+            x    = this.get("x"),
+            y    = this.get("y"),
+            newX = x,
+            newY = y;
 
         switch(direction) {
         case "up":
@@ -82,8 +110,8 @@ var GameInteractionWalkController = Ember.ObjectController.extend({
     },
 
     determineCurrentFrameRow: function(direction) {
-        var currentFrameRow,
-            frameRows = this.get("frameRows");
+        var currentFrameRow = this.get("currentFrameRow"),
+            frameRows       = this.get("frameRows");
 
         switch (direction) {
         case "up":
@@ -105,16 +133,20 @@ var GameInteractionWalkController = Ember.ObjectController.extend({
 
 
     walk: function(evt) {
-        var direction          = this.determineDirection(evt.which),
-            position           = this.determinePosition(direction),
-            currentFrameColumn = this.determineCurrentFrameColumn(),
-            currentFrameRow    = this.determineCurrentFrameRow(direction);
+        var keyCode = evt.which;
 
-        this.set("direction", direction);
-        this.set("x", position.x);
-        this.set("y", position.y);
-        this.set("currentFrameColumn", currentFrameColumn);
-        this.set("currentFrameRow", currentFrameRow);
+        if (this.isValidKeyCode(keyCode)) {
+            var direction          = this.determineDirection(keyCode),
+                position           = this.determinePosition(direction),
+                currentFrameColumn = this.determineCurrentFrameColumn(),
+                currentFrameRow    = this.determineCurrentFrameRow(direction);
+
+            this.set("direction", direction);
+            this.set("x", position.x);
+            this.set("y", position.y);
+            this.set("currentFrameColumn", currentFrameColumn);
+            this.set("currentFrameRow", currentFrameRow);
+        }
     }
 });
 
