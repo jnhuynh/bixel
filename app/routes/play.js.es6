@@ -25,15 +25,17 @@ var PlayRoute = Ember.Route.extend({
     var webSocket = new WebSocket(uri);
 
     webSocket.onopen = function() {
-      console.log("Opening");
+      console.log("Opening web socket");
     };
 
     webSocket.onmessage = function(message) {
-      console.log(message);
+      var data = JSON.parse(message.data);
+
+      console.log(data);
     };
 
     webSocket.onclose = function() {
-      console.log("Closing");
+      console.log("Closing web socket");
     };
 
     return webSocket;

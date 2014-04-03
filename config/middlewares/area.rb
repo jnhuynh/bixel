@@ -14,12 +14,21 @@ module Bixel
       if Faye::WebSocket.websocket?(env)
         ws = Faye::WebSocket.new(env, nil, { ping: KEEPALIVE_TIME })
         ws.on :open do |event|
-          p [:open, ws.object_id]
+          puts [:open, ws.object_id]
           @clients << ws
         end
 
         ws.on :message do |event|
-          p [:event, event.data]
+          puts [:event, event.data]
+
+          data = event.data
+
+          if data["player"]
+            player   = Player.find(data["player"]["id"])
+            player.x = data["player"]["x"]
+            player.y = data["player"]["y"]
+            player.save
+          end
 
           @clients.each do |client|
             client.send(event.data)

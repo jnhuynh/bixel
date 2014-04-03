@@ -12,7 +12,20 @@ var PlayController = Ember.Controller.extend({
           closing    = (readyState > 1);
 
       if (!!webSocket && !connecting && !closing) {
-        webSocket.send(JSON.stringify({hi: "bye"}));
+        var player = this.get("player"),
+            id     = player.get("id"),
+            x      = player.get("x"),
+            y      = player.get("y");
+
+        var jsonString = JSON.stringify({
+          player: {
+            id: id,
+            x: x,
+            y: y
+          }
+        });
+
+        webSocket.send(jsonString);
       }
     }
   }.observes("player.x", "player.y")
