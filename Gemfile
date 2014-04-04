@@ -24,6 +24,10 @@ gem "annotate"
 # Use jquery as the JavaScript library
 gem "jquery-rails"
 
+gem "faye-websocket"
+
+gem "puma"
+
 group :production do
   gem "rails_12factor"
 end
