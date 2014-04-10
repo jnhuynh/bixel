@@ -29,11 +29,21 @@ var PlayRoute = Ember.Route.extend({
     };
 
     webSocket.onmessage = function(message) {
-      var data   = JSON.parse(message.data),
-          player = this.get("controller.player");
+      var data                = JSON.parse(message.data),
+          player              = this.get("controller.player"),
+          playerPayload       = { player: data.player },
+          playerId            = playerPayload.player.id.toString(10),
+          spritesheetsPayload = data.spritesheets;
 
-      if (data.player.id !== player.get("id")) {
-        this.store.pushPayload("player", data);
+      if (playerId !== player.get("id")) {
+        this.store.pushPayload("player", playerPayload);
+
+        spritesheetsPayload.forEach(function(spritesheet) {
+          var spritesheetPayload = { spritesheet: spritesheet };
+
+          this.store.pushPayload("spritesheet", spritesheetPayload);
+        }.bind(this));
+
         console.log(data);
       }
     }.bind(this);
