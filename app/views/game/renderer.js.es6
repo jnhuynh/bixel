@@ -37,10 +37,12 @@ var GameRendererView = Ember.View.extend({
                 var delta,
                     players       = _this.get("players"),
                     canvasCtx     = _this.get("canvasCtx"),
-                    lastTimestamp = _this.get("lastTimestamp");
+                    lastTimestamp = _this.get("lastTimestamp"),
+                    width         = _this.get("width"),
+                    height        = _this.get("height");
 
                 // Clear the canvas
-                canvasCtx.clearRect(0, 0, 500, 500);
+                canvasCtx.clearRect(0, 0, width, height);
 
                 // Draw stuff
                 if (players) {
