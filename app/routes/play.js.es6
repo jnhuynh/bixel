@@ -29,10 +29,14 @@ var PlayRoute = Ember.Route.extend({
     };
 
     webSocket.onmessage = function(message) {
-      var data = JSON.parse(message.data);
+      var data   = JSON.parse(message.data),
+          player = this.get("controller.player");
 
-      console.log(data);
-    };
+      if (data.player.id !== player.get("id")) {
+        this.store.pushPayload("player", data);
+        console.log(data);
+      }
+    }.bind(this);
 
     webSocket.onclose = function() {
       console.log("Closing web socket");
