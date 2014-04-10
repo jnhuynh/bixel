@@ -19,15 +19,21 @@ module Bixel
         end
 
         ws.on :message do |event|
-          puts [:event, event.data]
-
-          data = event.data
+          data = JSON.parse(event.data)
 
           if data["player"]
-            player   = Player.find(data["player"]["id"])
-            player.x = data["player"]["x"]
-            player.y = data["player"]["y"]
-            player.save
+            id     = Integer(data["player"]["id"])
+            player = Player.find(id)
+
+            if player
+              x = Integer(data["player"]["x"])
+              y = Integer(data["player"]["y"])
+
+              player.x = x
+              player.y = y
+
+              player.save
+            end
           end
 
           @clients.each do |client|
