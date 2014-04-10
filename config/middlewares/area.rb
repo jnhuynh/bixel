@@ -25,19 +25,31 @@ module Bixel
             id     = Integer(data["player"]["id"])
             player = Player.find(id)
 
-            if player
+            spritesheet_id = Integer(data["spritesheet"]["id"])
+            spritesheet    = Spritesheet.find(spritesheet_id)
+
+            if player && spritesheet
               x = Integer(data["player"]["x"])
               y = Integer(data["player"]["y"])
 
               player.x = x
               player.y = y
-
               player.save
-            end
-          end
 
-          @clients.each do |client|
-            client.send(event.data)
+              current_frame_row    = Integer(data["spritesheet"]["current_frame_row"])
+              current_frame_column = Integer(data["spritesheet"]["current_frame_column"])
+
+              spritesheet.current_frame_row    = current_frame_row
+              spritesheet.current_frame_column = current_frame_column
+              spritesheet.save
+
+              response_payload = PlayerSerializer.new(player).to_json
+
+              puts response_payload
+              @clients.each do |client|
+                client.send(response_payload)
+              end
+            end
           end
         end
 
