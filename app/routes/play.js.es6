@@ -1,8 +1,8 @@
 var PlayRoute = Ember.Route.extend({
   afterModel: function(transition) {
     var selectionMenuController = this.controllerFor("selection_menu"),
-      selectedPlayer,
-      selectedArea;
+        selectedPlayer,
+        selectedArea;
 
     if (selectionMenuController) {
       selectedPlayer = selectionMenuController.get("selectedPlayer");
@@ -16,62 +16,28 @@ var PlayRoute = Ember.Route.extend({
     }
   },
 
-  webSocket: null,
-
-  setupWebSocket: function() {
-    var scheme = "ws://",
-        uri    = scheme + window.document.location.host + "/";
-
-    var webSocket = new WebSocket(uri);
-
-    webSocket.onopen = function() {
-      console.log("Opening web socket");
-    };
-
-    webSocket.onmessage = function(message) {
-      var data                = JSON.parse(message.data),
-          player              = this.get("controller.player"),
-          playerPayload       = { player: data.player },
-          playerId            = playerPayload.player.id.toString(10),
-          spritesheetsPayload = data.spritesheets;
-
-      if (playerId !== player.get("id")) {
-        this.store.pushPayload("player", playerPayload);
-
-        spritesheetsPayload.forEach(function(spritesheet) {
-          var spritesheetPayload = { spritesheet: spritesheet };
-
-          this.store.pushPayload("spritesheet", spritesheetPayload);
-        }.bind(this));
-
-        console.log(data);
-      }
-    }.bind(this);
-
-    webSocket.onclose = function() {
-      console.log("Closing web socket");
-    };
-
-    return webSocket;
-  },
-
   deactivate: function() {
-    var webSocket = this.get("webSocket");
-    webSocket.close();
-    this.set("webSocket", null);
+    var game = this.get("controller.game");
+
+    game.closeWebSocket();
   },
 
   setupController: function(controller, model) {
     var selectionMenuController = this.controllerFor("selection_menu"),
         selectedPlayer          = selectionMenuController.get("selectedPlayer"),
-        selectedArea            = selectionMenuController.get("selectedArea"),
-        webSocket               = this.setupWebSocket();
+        selectedArea            = selectionMenuController.get("selectedArea");
+
+    var game = this.store.createRecord("game", {
+      area:    selectedArea,
+      player:  selectedPlayer,
+      store:   this.store
+    });
+
+    game.openWebSocket();
 
     controller.set("area", selectedArea);
     controller.set("player", selectedPlayer);
-
-    this.set("webSocket", webSocket);
-    controller.set("webSocket", webSocket);
+    controller.set("game", game);
   },
 
   actions: {
