@@ -9,7 +9,8 @@ var GameRendererView = Ember.View.extend({
     height:  Ember.computed.alias("area.height"),
 
     // Passed in via template context
-    area:      null,
+    game:     null,
+    area:     Ember.computed.alias("game.area"),
     players:  function() {
         // Wrap player models with appropriate render controllers
         var players = this.get("area.players").map(function(player) {

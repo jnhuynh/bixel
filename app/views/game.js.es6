@@ -2,8 +2,9 @@ var GameView = Ember.View.extend({
     templateName: "game",
 
     // Passed in via template context
-    area:    null,
-    player:  null,
+    game:    null,
+    area:    Ember.computed.alias("game.area"),
+    player:  Ember.computed.alias("game.player"),
 
     didInsertElement: function() {
         var gameContainer = $("#game-container", this.get("element")),

@@ -34,9 +34,6 @@ var PlayRoute = Ember.Route.extend({
     });
 
     game.openWebSocket();
-
-    controller.set("area", selectedArea);
-    controller.set("player", selectedPlayer);
     controller.set("game", game);
   },
 
@@ -44,8 +41,8 @@ var PlayRoute = Ember.Route.extend({
     exitGame: function() {
       var controller              = this.get("controller"),
           selectionMenuController = this.controllerFor("selection_menu"),
-          player                  = controller.get("player"),
-          area                    = controller.get("area");
+          player                  = controller.get("game.player"),
+          area                    = controller.get("game.area");
 
       area.get("players").removeObject(player);
       area.save();

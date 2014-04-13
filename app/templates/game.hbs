@@ -1,8 +1,8 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <div id="game-container">
-      {{view "game/interaction" area=view.area player=view.player}}
-      {{view "game/renderer" area=view.area}}
+      {{view "game/interaction" game=game}}
+      {{view "game/renderer" game=game}}
     </div>
   </div>
 </div>

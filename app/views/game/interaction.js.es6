@@ -12,8 +12,9 @@ var GameInteractionView =  Ember.View.extend({
 
     tabIndex: 0,
 
-    area:    null,
-    player:  null,
+    game:    null,
+    area:    Ember.computed.alias("game.area"),
+    player:  Ember.computed.alias("game.player"),
     walkController: function() {
         return GameInteractionWalkController.create({
             content: this.get("player")
