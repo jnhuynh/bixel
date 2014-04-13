@@ -45,7 +45,6 @@ module Bixel
 
               response_payload = PlayerSerializer.new(player).to_json
 
-              puts response_payload
               @clients.each do |client|
                 client.send(response_payload)
               end
