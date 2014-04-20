@@ -7,6 +7,10 @@ var Game = DS.Model.extend({
   player:    belongsTo("player"),
   entities:  hasMany("entity"),
 
+  // TODO:
+  //  All Of this stuff needs to be put into an adapter!
+  //  I may also removing the API calls and have the websocket handle
+  //  everything (game join, game exit, getting characters, etc).
   store:      null,
   webSocket:  null,
 
